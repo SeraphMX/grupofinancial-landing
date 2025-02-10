@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Mail, Phone, MapPin, InfinityIcon } from 'lucide-react';
 
 const Footer = () => {
@@ -20,24 +21,35 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Enlaces Rápidos</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/" className="text-gray-300 hover:text-white transition-colors">
                   Inicio
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" className="text-gray-300 hover:text-white transition-colors">
-                  Servicios
-                </a>
-              </li>
-              <li>
-                <a href="#about" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/nosotros" className="text-gray-300 hover:text-white transition-colors">
                   Nosotros
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#contact" className="text-gray-300 hover:text-white transition-colors">
-                  Contacto
-                </a>
+                <Link to="/cotizador" className="text-gray-300 hover:text-white transition-colors">
+                  Cotizador
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Legal</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/privacidad" className="text-gray-300 hover:text-white transition-colors">
+                  Aviso de Privacidad
+                </Link>
+              </li>
+              <li>
+                <Link to="/terminos" className="text-gray-300 hover:text-white transition-colors">
+                  Términos y Condiciones
+                </Link>
               </li>
             </ul>
           </div>
@@ -60,29 +72,29 @@ const Footer = () => {
                 </span>
               </li>
             </ul>
-          </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Síguenos</h3>
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
-              >
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
-              >
-                <Instagram className="h-5 w-5" />
-              </a>
+            <div className="mt-6">
+              <h3 className="text-lg font-semibold mb-4">Síguenos</h3>
+              <div className="flex space-x-4">
+                <a
+                  href="#"
+                  className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
+                >
+                  <Facebook className="h-5 w-5" />
+                </a>
+                <a
+                  href="#"
+                  className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
+                >
+                  <Twitter className="h-5 w-5" />
+                </a>
+                <a
+                  href="#"
+                  className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+              </div>
             </div>
           </div>
         </div>

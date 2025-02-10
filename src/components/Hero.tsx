@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -12,14 +13,15 @@ const Hero = () => {
           <p className="text-lg md:text-xl text-gray-600 mb-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
             Soluciones financieras personalizadas para hacer realidad tus proyectos
           </p>
-          <a
-            href="#calculator"
+          <Link
+            to="/cotizador"
+            state={{ from: 'home' }}
             className="btn-primary text-lg animate-slide-up"
             style={{ animationDelay: '0.4s' }}
           >
             Calcular Mi Crédito
             <ArrowRight className="ml-2 h-5 w-5" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>
