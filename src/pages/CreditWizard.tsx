@@ -73,7 +73,7 @@ const CreditWizard = () => {
     switch (step) {
       case 1:
         return (
-          <div className='space-y-4 py-10 px-4'>
+          <div className='space-y-4 py-10 px-4 '>
             <h2 className='text-2xl font-bold text-primary text-center my-2'>¿Qué tipo de cliente eres?</h2>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
               <button
@@ -115,8 +115,8 @@ const CreditWizard = () => {
 
               <div className='mb-8'>
                 <div className='flex justify-between items-center mb-4'>
-                  <span className='text-gray-600'>Plazo (meses)</span>
-                  <span className='text-2xl font-bold text-primary'>{term}</span>
+                  <span className='text-gray-600'>Plazo</span>
+                  <span className='text-2xl font-bold text-primary'>{term} meses</span>
                 </div>
                 <input
                   type='range'
@@ -183,7 +183,7 @@ const CreditWizard = () => {
 
       case 3:
         return (
-          <div className='space-y-4'>
+          <div className='space-y-4 '>
             <h2 className='text-2xl font-bold text-primary text-center my-4'>
               Datos del {clientType === 'personal' ? 'Cliente' : 'Negocio'}
             </h2>
@@ -203,7 +203,7 @@ const CreditWizard = () => {
 
       case 4:
         return (
-          <div className='space-y-8'>
+          <div className='space-y-8 '>
             <div className='text-center'>
               <h2 className='text-2xl font-bold text-primary mb-4'>¡Gracias por tu solicitud!</h2>
               <p className='text-gray-600 mb-8'>Hemos recibido tu información y un asesor se pondrá en contacto contigo pronto.</p>
@@ -280,18 +280,18 @@ const CreditWizard = () => {
     <div className='pt-20'>
       <div className='container py-5'>
         <div className='max-w-3xl mx-auto'>
-          <div className='flex justify-between items-center mb-5'>
+          <div className='flex justify-between items-center mb-5 '>
             <Link to='/' className='inline-flex items-center text-primary hover:text-primary/80' onClick={() => dispatch(resetForm())}>
               <ArrowLeft className='h-5 w-5 mr-2' />
               Regresar
             </Link>
-            <div className='flex items-center space-x-2'>
+            <div className='flex items-center space-x-2 '>
               <Calculator className='h-6 w-6 text-primary' />
               <h1 className='text-xl font-bold text-primary'>Crédito Simple</h1>
             </div>
           </div>
 
-          <div className='bg-gray-50 rounded-2xl p-2'>{renderStep()}</div>
+          <div className='bg-gray-50 rounded-2xl p-2 lg:min-h-[420px]'>{renderStep()}</div>
         </div>
       </div>
     </div>

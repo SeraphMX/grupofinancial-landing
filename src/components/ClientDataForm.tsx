@@ -16,6 +16,7 @@ interface ClientDataFormProps {
 const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious }: ClientDataFormProps) => {
   const {
     register,
+    setValue,
     handleSubmit,
     control,
     formState: { errors }
@@ -47,6 +48,7 @@ const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious }: Cli
           label='Teléfono'
           type='tel'
           variant='bordered'
+          maxLength={10}
           isInvalid={!!errors.phone}
           errorMessage={errors.phone?.message?.toString()}
         />
@@ -54,8 +56,13 @@ const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious }: Cli
           {...register('rfc')}
           label='RFC'
           variant='bordered'
+          maxLength={13}
           isInvalid={!!errors.rfc}
           errorMessage={errors.rfc?.message?.toString()}
+          onInput={(e) => {
+            e.currentTarget.value = e.currentTarget.value.toUpperCase() // Cambia el valor visible
+            setValue('rfc', e.currentTarget.value, { shouldValidate: true })
+          }}
         />
 
         {clientType === 'business' && (

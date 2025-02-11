@@ -8,13 +8,13 @@ const Footer = () => {
       <div className='container py-12'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           <div>
-            <div className='flex items-center mb-4'>
+            <div className='flex items-center mb-4 justify-center md:justify-start'>
               <img src={logo} alt='Logo' className='w-40' />
             </div>
             {/* <p className='text-gray-300'>Soluciones financieras innovadoras para impulsar tus proyectos y hacer realidad tus sueños.</p> */}
           </div>
 
-          <div>
+          <div className='hidden md:block'>
             <h3 className='text-lg font-semibold mb-4'>Enlaces Rápidos</h3>
             <ul className='space-y-2'>
               <li>
@@ -35,7 +35,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div>
+          <div className='hidden md:block'>
             <h3 className='text-lg font-semibold mb-4'>Legal</h3>
             <ul className='space-y-2'>
               <li>
@@ -56,16 +56,20 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div>
+          <div className='text-center md:block  flex flex-col md:text-left items-center md:justify-start'>
             <h3 className='text-lg font-semibold mb-4'>Contacto</h3>
             <ul className='space-y-2'>
               <li className='flex items-center'>
                 <Phone className='h-5 w-5 mr-2' />
-                <span className='text-gray-300'>+52 (555) 123-4567</span>
+                <a href='tel:555555555' className='text-gray-300'>
+                  +52 (555) 123-4567
+                </a>
               </li>
               <li className='flex items-center'>
                 <Mail className='h-5 w-5 mr-2' />
-                <span className='text-gray-300'>contacto@financeflow.mx</span>
+                <a href='mailto:hola@grupofinancial.online' className='text-gray-300'>
+                  hola@grupofinancial.online
+                </a>
               </li>
               <li className='flex items-center'>
                 <MapPin className='h-5 w-5 mr-2' />
