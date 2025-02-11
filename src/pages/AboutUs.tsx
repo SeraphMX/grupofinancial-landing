@@ -1,5 +1,7 @@
 import { Accordion, AccordionItem } from '@nextui-org/react'
-import { HelpCircle } from 'lucide-react'
+import { Blocks, HelpCircle } from 'lucide-react'
+import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component'
+import 'react-vertical-timeline-component/style.min.css'
 
 const AboutUs = () => {
   const processSteps = [
@@ -71,7 +73,7 @@ const AboutUs = () => {
         </div>
       </div>
 
-      <section className='py-16'>
+      <section className='bg-primary/5  py-16'>
         <div className='container'>
           <div className='max-w-3xl mx-auto'>
             <h2 className='text-3xl font-bold text-primary mb-8 text-center'>Nuestro Proceso</h2>
@@ -82,18 +84,33 @@ const AboutUs = () => {
               </p>
             </div>
 
-            <div className='space-y-6'>
+            <VerticalTimeline>
               {processSteps.map((step, index) => (
-                <div key={index} className='flex items-start space-x-4 bg-white p-6 rounded-lg shadow-sm'>
-                  <div className='w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0'>
-                    <span className='text-primary font-semibold'>{index + 1}</span>
-                  </div>
-                  <div>
-                    <h3 className='text-xl font-semibold text-primary mb-2'>{step.title}</h3>
-                    <p className='text-gray-600'>{step.description}</p>
-                  </div>
-                </div>
+                <VerticalTimelineElement
+                  key={index}
+                  className='vertical-timeline-element--work'
+                  iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
+                  icon={<Blocks />}
+                >
+                  <h3 className='text-secondary text-xl font-semibold'>
+                    {index + 1} {step.title}
+                  </h3>
+
+                  <p>{step.description}</p>
+                </VerticalTimelineElement>
               ))}
+            </VerticalTimeline>
+
+            <div className='space-y-6'>
+              <div className='flex items-start space-x-4 bg-white p-6 rounded-lg shadow-sm'>
+                <div className='w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0'>
+                  <span className='text-primary font-semibold'>A</span>
+                </div>
+                <div>
+                  <h3 className='text-xl font-semibold text-primary mb-2'>Estas listo para iniciar con nosotros?</h3>
+                  <p className='text-gray-600'>Solicita tu credito ahora </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
