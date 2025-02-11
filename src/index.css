@@ -11,8 +11,10 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
+
+  section {
+    scroll-margin-top: 80px;
+    /* Ajusta este valor según la altura de tu navbar */
   }
 
   h1,
