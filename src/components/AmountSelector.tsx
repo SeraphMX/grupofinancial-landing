@@ -17,8 +17,8 @@ const AmountSelector = ({ amount, minAmount, maxAmount, step, onChange }: Amount
   }
 
   return (
-    <div className='mb-8'>
-      <div className='flex justify-between items-center mb-4'>
+    <div className='mb-4'>
+      <div className='flex justify-between items-center mb-2'>
         <span className='text-gray-600'>Monto del crédito</span>
         <span className='text-2xl font-bold text-primary flex items-center'>{formatCurrency(amount)}</span>
       </div>

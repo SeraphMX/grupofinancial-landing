@@ -113,8 +113,8 @@ const CreditWizard = () => {
                 onChange={(value) => dispatch(setAmount(value))}
               />
 
-              <div className='mb-8'>
-                <div className='flex justify-between items-center mb-4'>
+              <div className='mb-4'>
+                <div className='flex justify-between items-center mb-2'>
                   <span className='text-gray-600'>Plazo</span>
                   <span className='text-2xl font-bold text-primary'>{term} meses</span>
                 </div>
@@ -133,7 +133,7 @@ const CreditWizard = () => {
                 </div>
               </div>
 
-              <div className='mb-8'>
+              <div className='mb-4'>
                 <RadioGroup
                   label='Tipo de Crédito'
                   value={guaranteeType}
@@ -159,7 +159,7 @@ const CreditWizard = () => {
                 </div> */}
               </div>
 
-              <div className='flex justify-between mt-8'>
+              <div className='flex justify-between mt-4'>
                 <Button
                   onClick={() => dispatch(prevStep())}
                   variant='ghost'
@@ -185,7 +185,7 @@ const CreditWizard = () => {
         return (
           <div className='space-y-4 '>
             <h2 className='text-2xl font-bold text-primary text-center my-4'>
-              Datos del {clientType === 'personal' ? 'Cliente' : 'Negocio'}
+              {clientType === 'personal' ? 'Captura tus datos' : 'Datos del negocio'}
             </h2>
             <div className='bg-white p-6 rounded-xl shadow-lg'>
               <ClientDataForm
@@ -205,7 +205,7 @@ const CreditWizard = () => {
         return (
           <div className='space-y-8 '>
             <div className='text-center'>
-              <h2 className='text-2xl font-bold text-primary mb-4'>¡Gracias por tu solicitud!</h2>
+              <h2 className='text-2xl font-bold text-primary mb-4'>¡Diste el primer paso!</h2>
               <p className='text-gray-600 mb-8'>Hemos recibido tu información y un asesor se pondrá en contacto contigo pronto.</p>
             </div>
 
@@ -229,8 +229,11 @@ const CreditWizard = () => {
                   <p className='font-semibold'>{term} meses</p>
                 </div>
                 <div>
-                  <p className='text-sm text-gray-600'>Pago Mensual Estimado</p>
+                  <p className='text-sm text-gray-600'>Pago Mensual*</p>
                   <p className='font-semibold'>{formatCurrency(monthlyPayment)}</p>
+                </div>
+                <div className='text-tiny text-primary opacity-50 col-span-2'>
+                  *El pago mensual es aproximado, una vez que tu solicitud sea analizada sabras el monto exacto
                 </div>
               </div>
 

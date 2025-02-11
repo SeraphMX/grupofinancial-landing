@@ -7,7 +7,7 @@ const products = [
     icon: Wallet,
     title: 'Crédito Simple',
     description: 'Financiamiento a medida con tasas competitivas y plazos flexibles para impulsar tu negocio o proyecto personal.',
-    features: ['Tasas competitivas', 'Plazos flexibles', 'Sin comisiones ocultas']
+    features: ['Tasas competitivas', 'Plazos flexibles', 'Sin ningun tipo de  adelanto']
   },
   {
     id: 'credito-revolvente',

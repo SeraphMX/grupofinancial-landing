@@ -36,7 +36,6 @@ const CreditoSimple = () => {
     'Identificación oficial vigente',
     'Comprobante de domicilio reciente',
     'Estados de cuenta bancarios (últimos 3 meses)',
-    'Declaración anual de impuestos',
     'Estados financieros (para empresas)',
     'Historial crediticio favorable'
   ]
@@ -68,30 +67,37 @@ const CreditoSimple = () => {
           Volver al inicio
         </Link>
 
-        <h1 className='text-4xl font-bold text-primary mb-6'>Crédito Simple</h1>
-
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-12'>
-          <div>
-            <p className='text-lg text-gray-600 mb-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2  gap-8'>
+          <div className='p-8 mb-4'>
+            <h1 className='text-4xl font-bold text-primary '>Crédito Simple</h1>
+            <p className='text-lg text-gray-600 '>
               El Crédito Simple es la solución ideal para financiar proyectos específicos, capital de trabajo o expandir tu negocio. Con
               términos claros y tasas competitivas, te ayudamos a alcanzar tus objetivos financieros.
             </p>
+          </div>
 
-            <div className='bg-gray-50 rounded-xl p-8 mb-8'>
-              <h2 className='text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
-              <ul className='space-y-4'>
-                {getFeatures(selectedTab === 'con-garantia').map((feature, index) => (
-                  <li key={index} className='flex items-start'>
-                    <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
-                    <span className='text-gray-600'>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className='bg-blue-50 rounded-xl p-8 self-center'>
+            <h4 className='text-2xl font-semibold text-primary '>¿Para qué lo puedes usar?</h4>
+            <p className=' text-gray-600'>
+              Utiliza el Crédito Simple para capital de trabajo, compra de inventario, expansión de negocio, adquisición de equipo, pago a
+              proveedores o consolidación de deudas. Ideal para impulsar tu empresa o financiar proyectos específicos.
+            </p>
+          </div>
+
+          <div className='bg-gray-50 rounded-xl  p-8 place-self-start w-full'>
+            <h2 className='text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
+            <ul className='space-y-4'>
+              {getFeatures(selectedTab === 'con-garantia').map((feature, index) => (
+                <li key={index} className='flex items-start'>
+                  <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
+                  <span className='text-gray-600'>{feature}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div>
-            <div className='bg-white shadow-lg rounded-xl p-8 mb-8'>
+            <div className='bg-white shadow-lg rounded-xl p-8  border border-gray-200'>
               <h2 className='text-2xl font-semibold text-primary mb-6'>Requisitos</h2>
               <Tabs
                 aria-label='Opciones de crédito'
@@ -146,7 +152,9 @@ const CreditoSimple = () => {
                 </Tab>
               </Tabs>
             </div>
+          </div>
 
+          <div>
             <div className='bg-primary/5 rounded-xl p-8'>
               <h2 className='text-2xl font-semibold text-primary mb-4'>¿Listo para comenzar?</h2>
               <p className='text-gray-600 mb-6'>
