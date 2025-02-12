@@ -1,3 +1,5 @@
+import { Slider } from '@nextui-org/react'
+
 interface AmountSelectorProps {
   amount: number
   minAmount: number
@@ -23,20 +25,34 @@ const AmountSelector = ({ amount, minAmount, maxAmount, step, onChange }: Amount
         <span className='text-2xl font-bold text-primary flex items-center'>{formatCurrency(amount)}</span>
       </div>
 
-      <input
-        type='range'
-        min={minAmount}
-        max={maxAmount}
+      <Slider 
+        size="lg"
         step={step}
+        minValue={minAmount}
+        maxValue={maxAmount}
         value={amount}
-        onChange={(e) => onChange(Number(e.target.value))}
-        className='w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-secondary'
+        onChange={(value) => onChange(Number(value))}
+        className="max-w-full"
+        color="primary"
+        showSteps={true}
+        marks={[
+          {
+            value: minAmount,
+            label: formatCurrency(minAmount)
+          },
+          {
+            value: maxAmount,
+            label: formatCurrency(maxAmount)
+          }
+        ]}
+        classNames={{
+          base: "max-w-full",
+          filler: "bg-primary",
+          labelWrapper: "mb-2",
+          mark: "mt-1",
+          markLabel: "text-small text-gray-500"
+        }}
       />
-
-      <div className='flex justify-between mt-2 text-sm text-gray-500'>
-        <span>{formatCurrency(minAmount)}</span>
-        <span>{formatCurrency(maxAmount)}</span>
-      </div>
     </div>
   )
 }

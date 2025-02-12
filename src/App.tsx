@@ -3,11 +3,13 @@ import { ReactNode, Suspense } from 'react'
 import { Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom'
 import Benefits from './components/Benefits'
 import ChatAssistant from './components/ChatAssistant'
+import CompanyInfo from './components/CompanyInfo'
 import ContactForm from './components/ContactForm'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import PageLoader from './components/PageLoader'
+import Partners from './components/Partners'
 import Products from './components/Products'
 import ScrollToTop from './components/ScrollToTop'
 import Testimonials from './components/Testimonials'
@@ -18,6 +20,7 @@ import CotizadorRevolvente from './pages/CotizadorRevolvente'
 import CreditoRevolvente from './pages/CreditoRevolvente'
 import CreditoSimple from './pages/CreditoSimple'
 import CreditWizard from './pages/CreditWizard'
+import Fees from './pages/Fees'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import Terms from './pages/Terms'
 
@@ -106,6 +109,14 @@ function AnimatedRoutes() {
             </PageWrapper>
           }
         />
+        <Route
+          path='/comisiones'
+          element={
+            <PageWrapper>
+              <Fees />
+            </PageWrapper>
+          }
+        />
       </Routes>
     </AnimatePresence>
   )
@@ -127,6 +138,8 @@ function HomePage() {
   return (
     <>
       <Hero />
+      <CompanyInfo />
+      <Partners />
       <Benefits />
       <Products />
       <Testimonials />

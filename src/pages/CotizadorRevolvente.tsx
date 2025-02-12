@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Building2, User, Calculator, MessageCircle as WhatsappIcon } from 'lucide-react';
+import { ArrowLeft, Building2, User, Calculator, MessageCircle as WhatsappIcon } from 'lucide-react';
 import { Button, RadioGroup, Radio } from '@nextui-org/react';
 import AmountSelector from '../components/AmountSelector';
 import ClientDataForm from '../components/ClientDataForm';
@@ -11,7 +11,7 @@ const CotizadorRevolvente = () => {
   const [step, setStep] = useState(1);
   const [clientType, setClientType] = useState<ClientType | null>(null);
   const [amount, setAmount] = useState(500000);
-  const [term, setTerm] = useState('12');
+  const [term, setTerm] = useState(12);
   const [clientData, setClientData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -26,7 +26,7 @@ const CotizadorRevolvente = () => {
 
   const calculateMonthlyPayment = () => {
     const rate = 0.015; // 1.5% mensual
-    const months = parseInt(term);
+    const months = term;
     const monthlyRate = rate;
     const numerator = monthlyRate * Math.pow(1 + monthlyRate, months);
     const denominator = Math.pow(1 + monthlyRate, months) - 1;
@@ -37,12 +37,11 @@ const CotizadorRevolvente = () => {
   const handleClientDataSubmit = async (data: any) => {
     try {
       setIsSubmitting(true);
-      setClientData(data);
       await createSolicitud({
         tipo_credito: 'revolvente',
         tipo_cliente: clientType!,
         monto: amount,
-        plazo: parseInt(term),
+        plazo: term,
         pago_mensual: calculateMonthlyPayment(),
         nombre: data.name,
         email: data.email,
@@ -52,10 +51,10 @@ const CotizadorRevolvente = () => {
         industria: data.industry,
         ingresos_anuales: data.annualRevenue
       });
+      setClientData(data);
       setStep(4);
     } catch (error) {
       console.error('Error al enviar la solicitud:', error);
-      // Aquí podrías mostrar un mensaje de error al usuario
     } finally {
       setIsSubmitting(false);
     }
@@ -137,14 +136,11 @@ const CotizadorRevolvente = () => {
               />
 
               <div className="mb-8">
-                <label className="block text-gray-600 mb-4">Plazo</label>
                 <RadioGroup
-                  value={term}
-                  onValueChange={setTerm}
+                  label="Plazo"
+                  value={term.toString()}
+                  onValueChange={(value) => setTerm(parseInt(value))}
                   orientation="horizontal"
-                  classNames={{
-                    wrapper: "gap-8"
-                  }}
                 >
                   <Radio value="12">12 meses</Radio>
                   <Radio value="24">24 meses</Radio>
@@ -175,7 +171,6 @@ const CotizadorRevolvente = () => {
                 <Button
                   onClick={() => setStep(3)}
                   color="primary"
-                  endContent={<ArrowRight className="h-5 w-5" />}
                 >
                   Continuar
                 </Button>

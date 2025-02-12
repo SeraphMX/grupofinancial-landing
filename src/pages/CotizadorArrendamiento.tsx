@@ -23,7 +23,7 @@ const CotizadorArrendamiento = () => {
   const [clientType, setClientType] = useState<'personal' | 'business' | null>(null);
   const [arrendamientoType, setArrendamientoType] = useState<'liquidez' | 'compra' | null>(null);
   const [assetValue, setAssetValue] = useState(1000000);
-  const [term, setTerm] = useState('12');
+  const [term, setTerm] = useState(12);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -45,7 +45,7 @@ const CotizadorArrendamiento = () => {
 
   const calculateMonthlyPayment = () => {
     const rate = 0.02; // 2% mensual
-    const months = parseInt(term);
+    const months = term;
     const loanAmount = arrendamientoType === 'liquidez' ? assetValue * 0.8 : assetValue;
     
     const monthlyRate = rate;
@@ -63,20 +63,17 @@ const CotizadorArrendamiento = () => {
         tipo_credito: 'arrendamiento',
         tipo_cliente: clientType!,
         monto: arrendamientoType === 'liquidez' ? assetValue * 0.8 : assetValue,
-        plazo: parseInt(term),
+        plazo: term,
         pago_mensual: calculateMonthlyPayment(),
         nombre: data.name,
         email: data.email,
         telefono: data.phone,
         rfc: data.rfc,
-        nombre_empresa: data.companyName,
-        industria: data.industry,
-        ingresos_anuales: data.annualRevenue
+        nombre_empresa: data.companyName
       });
       setStep(4);
     } catch (error) {
       console.error('Error al enviar la solicitud:', error);
-      // Aquí podrías mostrar un mensaje de error al usuario
     } finally {
       setIsSubmitting(false);
     }
@@ -166,12 +163,9 @@ const CotizadorArrendamiento = () => {
                   <div className="mb-8">
                     <RadioGroup
                       label="Plazo"
-                      value={term}
-                      onValueChange={setTerm}
+                      value={term.toString()}
+                      onValueChange={(value) => setTerm(parseInt(value))}
                       orientation="horizontal"
-                      classNames={{
-                        wrapper: "gap-8"
-                      }}
                     >
                       <Radio value="12">12 meses</Radio>
                       <Radio value="24">24 meses</Radio>

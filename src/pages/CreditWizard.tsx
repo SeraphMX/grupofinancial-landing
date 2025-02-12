@@ -1,8 +1,8 @@
-import { Button, Radio, RadioGroup } from '@nextui-org/react'
+import { Button, Radio, RadioGroup, Slider } from '@nextui-org/react'
 import { ArrowLeft, ArrowRight, Building2, Calculator, User, MessageCircle as WhatsappIcon } from 'lucide-react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import AmountSelector from '../components/AmountSelector'
 import ClientDataForm from '../components/ClientDataForm'
 import { createSolicitud } from '../services/solicitudes'
@@ -11,8 +11,8 @@ import {
   prevStep,
   resetForm,
   setAmount,
-  setClientData,
   setClientType,
+  setClientData,
   setGuaranteeType,
   setTerm,
   setCreditType,
@@ -72,7 +72,6 @@ const CreditWizard = () => {
       dispatch(nextStep())
     } catch (error) {
       console.error('Error al enviar la solicitud:', error)
-      // Aquí podrías mostrar un mensaje de error al usuario
     }
   }
 
@@ -94,7 +93,7 @@ const CreditWizard = () => {
         `Plazo: ${term} meses\n` +
         `Mi nombre es ${clientData.name} y quisiera más información.`
     )
-    return `https://wa.me/529996408077?text=${message}`
+    return `https://wa.me/525551234567?text=${message}`
   }
 
   const renderStep = () => {
@@ -133,32 +132,41 @@ const CreditWizard = () => {
           <div className='space-y-4'>
             <h2 className='text-2xl font-bold text-primary text-center my-2'>¿Cuánto necesitas?</h2>
             <div className='bg-white p-6 rounded-xl shadow-lg'>
-              <AmountSelector
-                amount={amount}
-                minAmount={min}
-                maxAmount={max}
-                step={stepAmount}
-                onChange={(value) => dispatch(setAmount(value))}
-              />
+              <AmountSelector amount={amount} minAmount={min} maxAmount={max} step={stepAmount} onChange={(value) => dispatch(setAmount(value))} />
 
-              <div className='mb-4'>
+              <div className='mb-8'>
                 <div className='flex justify-between items-center mb-2'>
                   <span className='text-gray-600'>Plazo</span>
                   <span className='text-2xl font-bold text-primary'>{term} meses</span>
                 </div>
-                <input
-                  type='range'
-                  min={12}
-                  max={guaranteeType === 'con-garantia' ? 180 : 60}
+                <Slider
+                  size="lg"
                   step={12}
+                  minValue={12}
+                  maxValue={guaranteeType === 'con-garantia' ? 180 : 60}
                   value={term}
-                  onChange={(e) => dispatch(setTerm(Number(e.target.value)))}
-                  className='w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-secondary'
+                  onChange={(value) => dispatch(setTerm(Number(value)))}
+                  className="max-w-full"
+                  color="primary"
+                  showSteps={true}
+                  marks={[
+                    {
+                      value: 12,
+                      label: "12 meses"
+                    },
+                    {
+                      value: guaranteeType === 'con-garantia' ? 180 : 60,
+                      label: `${guaranteeType === 'con-garantia' ? '180' : '60'} meses`
+                    }
+                  ]}
+                  classNames={{
+                    base: "max-w-full",
+                    filler: "bg-primary",
+                    labelWrapper: "mb-2",
+                    mark: "mt-1",
+                    markLabel: "text-small text-gray-500"
+                  }}
                 />
-                <div className='flex justify-between mt-2 text-sm text-gray-500'>
-                  <span>12 meses</span>
-                  <span>{guaranteeType === 'con-garantia' ? '180' : '60'} meses</span>
-                </div>
               </div>
 
               <div className='mb-4'>
@@ -167,9 +175,6 @@ const CreditWizard = () => {
                   value={guaranteeType}
                   onValueChange={(value) => dispatch(setGuaranteeType(value as GuaranteeType))}
                   orientation='horizontal'
-                  classNames={{
-                    wrapper: 'gap-4'
-                  }}
                 >
                   <Radio value='sin-garantia'>Sin Garantía</Radio>
                   <Radio value='con-garantia'>Con Garantía Hipotecaria</Radio>
@@ -184,20 +189,10 @@ const CreditWizard = () => {
               </div>
 
               <div className='flex justify-between mt-4'>
-                <Button
-                  onClick={() => dispatch(prevStep())}
-                  variant='ghost'
-                  color='secondary'
-                  startContent={<ArrowLeft className='h-5 w-5' />}
-                >
+                <Button onClick={() => dispatch(prevStep())} variant='ghost' color='secondary' startContent={<ArrowLeft className='h-5 w-5' />}>
                   Regresar
                 </Button>
-                <Button
-                  onClick={() => dispatch(nextStep())}
-                  variant='ghost'
-                  color='primary'
-                  endContent={<ArrowRight className='h-5 w-5' />}
-                >
+                <Button onClick={() => dispatch(nextStep())} variant='ghost' color='primary' endContent={<ArrowRight className='h-5 w-5' />}>
                   Continuar
                 </Button>
               </div>
@@ -250,11 +245,8 @@ const CreditWizard = () => {
                   <p className='font-semibold'>{term} meses</p>
                 </div>
                 <div>
-                  <p className='text-sm text-gray-600'>Pago Mensual*</p>
+                  <p className='text-sm text-gray-600'>Pago Mensual</p>
                   <p className='font-semibold'>{formatCurrency(monthlyPayment)}</p>
-                </div>
-                <div className='text-tiny text-primary opacity-50 col-span-2'>
-                  *El pago mensual es aproximado, una vez que tu solicitud sea analizada sabras el monto exacto
                 </div>
               </div>
 
