@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Building2, User, Calculator, MessageCircle as WhatsappIcon } from 'lucide-react';
 import { Button, RadioGroup, Radio } from '@nextui-org/react';
 import AmountSelector from '../components/AmountSelector';
 import ClientDataForm from '../components/ClientDataForm';
+import { createSolicitud } from '../services/solicitudes';
 import type { ClientType } from '../store/creditSlice';
 
 const CotizadorRevolvente = () => {
@@ -12,6 +13,7 @@ const CotizadorRevolvente = () => {
   const [amount, setAmount] = useState(500000);
   const [term, setTerm] = useState('12');
   const [clientData, setClientData] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('es-MX', {
@@ -30,6 +32,33 @@ const CotizadorRevolvente = () => {
     const denominator = Math.pow(1 + monthlyRate, months) - 1;
     const monthlyPayment = amount * (numerator / denominator);
     return Math.round(monthlyPayment);
+  };
+
+  const handleClientDataSubmit = async (data: any) => {
+    try {
+      setIsSubmitting(true);
+      setClientData(data);
+      await createSolicitud({
+        tipo_credito: 'revolvente',
+        tipo_cliente: clientType!,
+        monto: amount,
+        plazo: parseInt(term),
+        pago_mensual: calculateMonthlyPayment(),
+        nombre: data.name,
+        email: data.email,
+        telefono: data.phone,
+        rfc: data.rfc,
+        nombre_empresa: data.companyName,
+        industria: data.industry,
+        ingresos_anuales: data.annualRevenue
+      });
+      setStep(4);
+    } catch (error) {
+      console.error('Error al enviar la solicitud:', error);
+      // Aquí podrías mostrar un mensaje de error al usuario
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const getWhatsappLink = () => {
@@ -164,10 +193,7 @@ const CotizadorRevolvente = () => {
             <ClientDataForm
               clientType={clientType!}
               defaultValues={clientData}
-              onSubmit={(data) => {
-                setClientData(data);
-                setStep(4);
-              }}
+              onSubmit={handleClientDataSubmit}
               onPrevious={() => setStep(2)}
             />
           </div>

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import AmountSelector from '../components/AmountSelector'
 import ClientDataForm from '../components/ClientDataForm'
+import { createSolicitud } from '../services/solicitudes'
 import {
   nextStep,
   prevStep,
@@ -14,6 +15,7 @@ import {
   setClientType,
   setGuaranteeType,
   setTerm,
+  setCreditType,
   type ClientType,
   type GuaranteeType
 } from '../store/creditSlice'
@@ -33,6 +35,7 @@ const CreditWizard = () => {
     if (location.state?.withGuarantee) {
       dispatch(setGuaranteeType('con-garantia'))
     }
+    dispatch(setCreditType('simple'))
   }, [dispatch, location.state])
 
   const formatCurrency = (value: number) => {
@@ -46,6 +49,31 @@ const CreditWizard = () => {
 
   const handleClientTypeSelect = (type: ClientType) => {
     dispatch(setClientType(type))
+  }
+
+  const handleClientDataSubmit = async (data: any) => {
+    try {
+      dispatch(setClientData(data))
+      await createSolicitud({
+        tipo_credito: 'simple',
+        tipo_cliente: clientType!,
+        tipo_garantia: guaranteeType,
+        monto: amount,
+        plazo: term,
+        pago_mensual: monthlyPayment,
+        nombre: data.name,
+        email: data.email,
+        telefono: data.phone,
+        rfc: data.rfc,
+        nombre_empresa: data.companyName,
+        industria: data.industry,
+        ingresos_anuales: data.annualRevenue
+      })
+      dispatch(nextStep())
+    } catch (error) {
+      console.error('Error al enviar la solicitud:', error)
+      // Aquí podrías mostrar un mensaje de error al usuario
+    }
   }
 
   const getAmountLimits = () => {
@@ -153,10 +181,6 @@ const CreditWizard = () => {
                   <p className='text-sm text-gray-600 mb-1'>Pago Mensual</p>
                   <p className='text-xl font-bold text-primary'>{formatCurrency(monthlyPayment)}</p>
                 </div>
-                {/* <div className='bg-gray-50 p-4 rounded-lg'>
-                  <p className='text-sm text-gray-600 mb-1'>Pago Total</p>
-                  <p className='text-xl font-bold text-primary'>{formatCurrency(totalPayment)}</p>
-                </div> */}
               </div>
 
               <div className='flex justify-between mt-4'>
@@ -191,10 +215,7 @@ const CreditWizard = () => {
               <ClientDataForm
                 clientType={clientType!}
                 defaultValues={clientData}
-                onSubmit={(data) => {
-                  dispatch(setClientData(data))
-                  dispatch(nextStep())
-                }}
+                onSubmit={handleClientDataSubmit}
                 onPrevious={() => dispatch(prevStep())}
               />
             </div>

@@ -2,6 +2,7 @@ import { Tab, Tabs } from '@nextui-org/react'
 import { ArrowLeft, Check } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import RelatedProducts from '../components/RelatedProducts'
 
 const CreditoSimple = () => {
   const navigate = useNavigate()
@@ -67,7 +68,7 @@ const CreditoSimple = () => {
           Volver al inicio
         </Link>
 
-        <div className='grid grid-cols-1 md:grid-cols-2  gap-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
           <div className='p-8 mb-4'>
             <h1 className='text-4xl font-bold text-primary '>Crédito Simple</h1>
             <p className='text-lg text-gray-600 '>
@@ -165,6 +166,10 @@ const CreditoSimple = () => {
                 Solicita un crédito simple
               </button>
             </div>
+          </div>
+
+          <div className="md:col-span-2">
+            <RelatedProducts />
           </div>
         </div>
       </div>

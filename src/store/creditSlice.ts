@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type ClientType = 'personal' | 'business';
 export type GuaranteeType = 'sin-garantia' | 'con-garantia';
+export type CreditType = 'simple' | 'revolvente' | 'arrendamiento';
 
 interface ClientData {
   name: string;
@@ -15,6 +16,7 @@ interface ClientData {
 
 interface CreditState {
   step: number;
+  creditType: CreditType;
   clientType: ClientType | null;
   guaranteeType: GuaranteeType;
   amount: number;
@@ -23,6 +25,9 @@ interface CreditState {
   totalPayment: number;
   interestRate: number;
   clientData: ClientData;
+  assetValue?: number; // Para arrendamiento
+  loanAmount?: number; // Para arrendamiento (80% del valor del activo)
+  arrendamientoType?: 'liquidez' | 'compra'; // Tipo de arrendamiento
 }
 
 const calculatePayments = (amount: number, term: number, rate: number) => {
@@ -40,6 +45,7 @@ const calculatePayments = (amount: number, term: number, rate: number) => {
 
 const initialState: CreditState = {
   step: 1,
+  creditType: 'simple',
   clientType: null,
   guaranteeType: 'sin-garantia',
   amount: 100000,
@@ -71,6 +77,9 @@ export const creditSlice = createSlice({
   name: 'credit',
   initialState,
   reducers: {
+    setCreditType: (state, action: PayloadAction<CreditType>) => {
+      state.creditType = action.payload;
+    },
     setClientType: (state, action: PayloadAction<ClientType>) => {
       state.clientType = action.payload;
       state.step = 2;
@@ -126,6 +135,26 @@ export const creditSlice = createSlice({
     setClientData: (state, action: PayloadAction<Partial<ClientData>>) => {
       state.clientData = { ...state.clientData, ...action.payload };
     },
+    setArrendamientoData: (state, action: PayloadAction<{
+      type: 'liquidez' | 'compra';
+      assetValue: number;
+      loanAmount?: number;
+    }>) => {
+      state.arrendamientoType = action.payload.type;
+      state.assetValue = action.payload.assetValue;
+      state.loanAmount = action.payload.loanAmount;
+      // Calcular el pago mensual basado en el monto del préstamo o valor del activo
+      const amountToCalculate = action.payload.type === 'liquidez' 
+        ? action.payload.loanAmount! 
+        : action.payload.assetValue;
+      const payments = calculatePayments(
+        amountToCalculate,
+        state.term,
+        state.interestRate
+      );
+      state.monthlyPayment = payments.monthlyPayment;
+      state.totalPayment = payments.totalPayment;
+    },
     nextStep: (state) => {
       state.step += 1;
     },
@@ -137,11 +166,13 @@ export const creditSlice = createSlice({
 });
 
 export const {
+  setCreditType,
   setClientType,
   setGuaranteeType,
   setAmount,
   setTerm,
   setClientData,
+  setArrendamientoData,
   nextStep,
   prevStep,
   resetForm,
