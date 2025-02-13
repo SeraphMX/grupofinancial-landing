@@ -3,13 +3,11 @@ import { ReactNode, Suspense } from 'react'
 import { Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom'
 import Benefits from './components/Benefits'
 import ChatAssistant from './components/ChatAssistant'
-import CompanyInfo from './components/CompanyInfo'
 import ContactForm from './components/ContactForm'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import PageLoader from './components/PageLoader'
-import Partners from './components/Partners'
 import Products from './components/Products'
 import ScrollToTop from './components/ScrollToTop'
 import Testimonials from './components/Testimonials'
@@ -138,8 +136,8 @@ function HomePage() {
   return (
     <>
       <Hero />
-      <CompanyInfo />
-      <Partners />
+      {/* <CompanyInfo />
+      <Partners /> */}
       <Benefits />
       <Products />
       <Testimonials />
@@ -152,9 +150,9 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className='min-h-screen bg-white'>
+      <div className='min-h-screen '>
         <Header />
-        <main>
+        <main className='relative z-10 bg-white'>
           <Suspense fallback={<PageLoader />}>
             <AnimatedRoutes />
           </Suspense>
