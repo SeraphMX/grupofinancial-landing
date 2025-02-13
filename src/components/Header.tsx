@@ -122,7 +122,7 @@ const Header = () => {
                 </button>
               ))}
               <Link to='/cotizador' className='block px-3 py-2 btn-primary w-full text-center' onClick={() => setIsMenuOpen(false)}>
-                Solicitar Crédito
+                Solicita tu crédito ahora!
               </Link>
             </div>
           </motion.div>
