@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Autocomplete, AutocompleteItem, Button, Input, Select, SelectItem } from '@nextui-org/react'
 import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { industries } from '../lib/data/industries'
+import { validatePhoneNumber } from '../lib/utils/phone'
 import { businessFormSchema, personalFormSchema } from '../lib/validations/credit'
 import type { ClientType } from '../store/creditSlice'
-import { useState, useEffect } from 'react'
-import { validatePhoneNumber } from '../lib/utils/phone'
 
 interface ClientDataFormProps {
   clientType: ClientType
@@ -99,11 +99,8 @@ const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious }: Cli
           variant='bordered'
           maxLength={10}
           isInvalid={!!errors.phone || !!phoneError}
-          errorMessage={(errors.phone?.message?.toString() || phoneError)}
-          description="Debe ser un número de teléfono móvil"
-          endContent={isValidatingPhone && (
-            <Loader2 className="h-4 w-4 animate-spin text-primary" />
-          )}
+          errorMessage={errors.phone?.message?.toString() || phoneError}
+          endContent={isValidatingPhone && <Loader2 className='h-4 w-4 animate-spin text-primary' />}
         />
         <Input
           {...register('rfc')}
@@ -179,12 +176,7 @@ const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious }: Cli
         <Button type='button' onClick={onPrevious} variant='bordered' startContent={<ArrowLeft className='h-5 w-5' />}>
           Anterior
         </Button>
-        <Button 
-          type='submit' 
-          color='primary' 
-          endContent={<ArrowRight className='h-5 w-5' />}
-          isLoading={isValidatingPhone}
-        >
+        <Button type='submit' color='primary' endContent={<ArrowRight className='h-5 w-5' />} isLoading={isValidatingPhone}>
           Continuar
         </Button>
       </div>
