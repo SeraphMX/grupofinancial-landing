@@ -1,21 +1,23 @@
-import { Button, Radio, RadioGroup, Slider } from '@nextui-org/react'
-import { ArrowLeft, ArrowRight, Building2, Calculator, User, MessageCircle as WhatsappIcon } from 'lucide-react'
+import { Button, cn, Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup, Slider } from '@nextui-org/react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowLeft, ArrowRight, Building2, CircleDollarSign, User, MessageCircle as WhatsappIcon } from 'lucide-react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import AmountSelector from '../components/AmountSelector'
 import ClientDataForm from '../components/ClientDataForm'
+import RelatedProducts from '../components/RelatedProducts'
 import { createSolicitud } from '../services/solicitudes'
 import {
   nextStep,
   prevStep,
   resetForm,
   setAmount,
-  setClientType,
   setClientData,
+  setClientType,
+  setCreditType,
   setGuaranteeType,
   setTerm,
-  setCreditType,
   type ClientType,
   type GuaranteeType
 } from '../store/creditSlice'
@@ -100,8 +102,8 @@ const CreditWizard = () => {
     switch (step) {
       case 1:
         return (
-          <div className='space-y-4 py-10 px-4 '>
-            <h2 className='text-2xl font-bold text-primary text-center my-2'>¿Qué tipo de cliente eres?</h2>
+          <motion.div className='space-y-4 py-10 md:py-12 px-4 ' initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <h2 className='text-2xl font-bold text-primary text-center my-2'>¿Cuál es tu perfil ?</h2>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
               <button
                 onClick={() => handleClientTypeSelect('personal')}
@@ -124,57 +126,82 @@ const CreditWizard = () => {
                 <p className='text-gray-600'>Financiamiento empresarial para impulsar tu negocio</p>
               </button>
             </div>
-          </div>
+          </motion.div>
         )
 
       case 2:
         return (
-          <div className='space-y-4'>
-            <h2 className='text-2xl font-bold text-primary text-center my-2'>¿Cuánto necesitas?</h2>
+          <motion.div className='space-y-4' initial={{ x: 100 }} animate={{ x: 0 }} exit={{ opacity: 0 }}>
+            <h2 className='text-2xl font-bold text-primary text-center mb-4'>¿Cuánto necesitas?</h2>
             <div className='bg-white p-6 rounded-xl shadow-lg'>
-              <AmountSelector amount={amount} minAmount={min} maxAmount={max} step={stepAmount} onChange={(value) => dispatch(setAmount(value))} />
+              <AmountSelector
+                amount={amount}
+                minAmount={min}
+                maxAmount={max}
+                step={stepAmount}
+                onChange={(value) => dispatch(setAmount(value))}
+              />
 
               <div className='mb-8'>
-                <div className='flex justify-between items-center mb-2'>
+                <div className='flex justify-between items-center mb-1'>
                   <span className='text-gray-600'>Plazo</span>
                   <span className='text-2xl font-bold text-primary'>{term} meses</span>
                 </div>
                 <Slider
-                  size="lg"
+                  size='md'
                   step={12}
                   minValue={12}
                   maxValue={guaranteeType === 'con-garantia' ? 180 : 60}
                   value={term}
                   onChange={(value) => dispatch(setTerm(Number(value)))}
-                  className="max-w-full"
-                  color="primary"
+                  className='max-w-full'
+                  color='primary'
                   showSteps={true}
-                  marks={[
-                    {
-                      value: 12,
-                      label: "12 meses"
-                    },
-                    {
-                      value: guaranteeType === 'con-garantia' ? 180 : 60,
-                      label: `${guaranteeType === 'con-garantia' ? '180' : '60'} meses`
-                    }
-                  ]}
                   classNames={{
-                    base: "max-w-full",
-                    filler: "bg-primary",
-                    labelWrapper: "mb-2",
-                    mark: "mt-1",
-                    markLabel: "text-small text-gray-500"
+                    base: 'max-w-full',
+
+                    labelWrapper: 'mb-2',
+                    mark: 'mt-1'
                   }}
                 />
               </div>
 
               <div className='mb-4'>
                 <RadioGroup
-                  label='Tipo de Crédito'
+                  label={
+                    <div className='flex items-center gap-2 mb-1'>
+                      Tipo de Crédito
+                      <Popover showArrow>
+                        <PopoverTrigger>
+                          <Button
+                            radius='full'
+                            size='sm'
+                            isIconOnly
+                            aria-label='¿Para qué necesito una garantia?'
+                            variant='ghost'
+                            color='secondary'
+                          >
+                            <span className='font-bold text-lg'>?</span>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <div className='px-1 py-2 max-w-[300px]'>
+                            <div className='text-lg font-bold'>¿Cúal es la diferencia?</div>
+                            <div className='text-small'>
+                              Si tienes buen historial crediticio, accede a un crédito sin garantía de hasta 5 millones. Para montos mayores
+                              o con historial irregular, una garantía hipotecaria facilita la aprobación.
+                            </div>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                  }
                   value={guaranteeType}
                   onValueChange={(value) => dispatch(setGuaranteeType(value as GuaranteeType))}
                   orientation='horizontal'
+                  classNames={{
+                    label: cn('text-primary', 'text-sm', 'font-semibold', 'font-montserrat', 'mb-2', 'text-xl')
+                  }}
                 >
                   <Radio value='sin-garantia'>Sin Garantía</Radio>
                   <Radio value='con-garantia'>Con Garantía Hipotecaria</Radio>
@@ -183,28 +210,38 @@ const CreditWizard = () => {
 
               <div className='grid grid-cols-1 gap-4'>
                 <div className='bg-gray-50 p-4 rounded-lg text-center'>
-                  <p className='text-sm text-gray-600 mb-1'>Pago Mensual</p>
-                  <p className='text-xl font-bold text-primary'>{formatCurrency(monthlyPayment)}</p>
+                  <p className='text-sm text-gray-600 mb-1'>Tu pago mensual (aproximado)</p>
+                  <p className='text-3xl font-bold text-primary'>{formatCurrency(monthlyPayment)}</p>
                 </div>
               </div>
 
               <div className='flex justify-between mt-4'>
-                <Button onClick={() => dispatch(prevStep())} variant='ghost' color='secondary' startContent={<ArrowLeft className='h-5 w-5' />}>
+                <Button
+                  onClick={() => dispatch(prevStep())}
+                  variant='ghost'
+                  color='secondary'
+                  startContent={<ArrowLeft className='h-5 w-5' />}
+                >
                   Regresar
                 </Button>
-                <Button onClick={() => dispatch(nextStep())} variant='ghost' color='primary' endContent={<ArrowRight className='h-5 w-5' />}>
+                <Button
+                  onClick={() => dispatch(nextStep())}
+                  variant='ghost'
+                  color='primary'
+                  endContent={<ArrowRight className='h-5 w-5' />}
+                >
                   Continuar
                 </Button>
               </div>
             </div>
-          </div>
+          </motion.div>
         )
 
       case 3:
         return (
-          <div className='space-y-4 '>
-            <h2 className='text-2xl font-bold text-primary text-center my-4'>
-              {clientType === 'personal' ? 'Captura tus datos' : 'Datos del negocio'}
+          <motion.div className='space-y-4 ' initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}>
+            <h2 className='text-2xl font-bold text-primary text-center mb-4'>
+              {clientType === 'personal' ? 'Completa tus datos' : 'Datos del negocio'}
             </h2>
             <div className='bg-white p-6 rounded-xl shadow-lg'>
               <ClientDataForm
@@ -214,12 +251,12 @@ const CreditWizard = () => {
                 onPrevious={() => dispatch(prevStep())}
               />
             </div>
-          </div>
+          </motion.div>
         )
 
       case 4:
         return (
-          <div className='space-y-8 '>
+          <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} className='space-y-8 '>
             <div className='text-center'>
               <h2 className='text-2xl font-bold text-primary mb-4'>¡Diste el primer paso!</h2>
               <p className='text-gray-600 mb-8'>Hemos recibido tu información y un asesor se pondrá en contacto contigo pronto.</p>
@@ -284,7 +321,7 @@ const CreditWizard = () => {
                 </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
         )
 
       default:
@@ -293,21 +330,40 @@ const CreditWizard = () => {
   }
 
   return (
-    <div className='pt-20'>
-      <div className='container py-5'>
-        <div className='max-w-3xl mx-auto'>
-          <div className='flex justify-between items-center mb-5 '>
+    <div className='pt-20 min-h-screen'>
+      <div className='container pt-5'>
+        <div className='max-w-3xl mx-auto '>
+          <div className='flex justify-between items-center'>
             <Link to='/' className='inline-flex items-center text-primary hover:text-primary/80' onClick={() => dispatch(resetForm())}>
               <ArrowLeft className='h-5 w-5 mr-2' />
               Regresar
             </Link>
             <div className='flex items-center space-x-2 '>
-              <Calculator className='h-6 w-6 text-primary' />
-              <h1 className='text-xl font-bold text-primary'>Crédito Simple</h1>
+              <CircleDollarSign className='h-6 w-6 text-primary' />
+              <h1 className='text-xl font-semibold text-primary'>Crédito Simple</h1>
             </div>
           </div>
+        </div>
+      </div>
+      <div className='container '>
+        <div className='max-w-3xl mx-auto '>
+          <div className='flex justify-between items-center mb-5 '></div>
 
-          <div className='bg-gray-50 rounded-2xl p-2 lg:min-h-[420px]'>{renderStep()}</div>
+          <AnimatePresence mode='wait'>
+            <motion.div
+              className='bg-gray-50 rounded-2xl py-6 md:px-24 md:py-10 lg:min-h-[420px]'
+              key={step} // Asegura que Framer Motion detecte el cambio de pasos
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.1 }}
+            >
+              {renderStep()}
+            </motion.div>
+          </AnimatePresence>
+          <div className='bg-gray-50 hidden 2xl:block '>
+            <RelatedProducts />
+          </div>
         </div>
       </div>
     </div>
