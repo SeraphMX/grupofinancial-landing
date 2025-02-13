@@ -1,17 +1,21 @@
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/branding/logo-full-white.svg'
 
 const Footer = () => {
+  const { scrollYProgress } = useScroll()
+  const footerY = useTransform(scrollYProgress, [0.9, 1], [-100, 0])
+  const opacity = useTransform(scrollYProgress, [0.8, 1], [0, 1])
+
   return (
-    <footer className='bg-primary text-white'>
-      <div className='container py-12'>
+    <footer className='bg-primary text-white sticky bottom-0 left-0 w-full z-0 '>
+      <motion.div className='container py-12' style={{ y: footerY, opacity: opacity }}>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           <div>
             <div className='flex items-center mb-4 justify-center md:justify-start'>
               <img src={logo} alt='Logo' className='w-40' />
             </div>
-            {/* <p className='text-gray-300'>Soluciones financieras innovadoras para impulsar tus proyectos y hacer realidad tus sueños.</p> */}
           </div>
 
           <div className='hidden md:block'>
@@ -56,7 +60,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className='text-center md:block  flex flex-col md:text-left items-center md:justify-start'>
+          <div className='text-center md:block flex flex-col md:text-left items-center md:justify-start'>
             <h3 className='text-lg font-semibold mb-4'>Contacto</h3>
             <ul className='space-y-2'>
               <li className='flex items-center'>
@@ -76,28 +80,13 @@ const Footer = () => {
                 <span className='text-gray-300'>Av. Reforma 222, CDMX</span>
               </li>
             </ul>
-
-            {/* <div className='mt-6'>
-              <h3 className='text-lg font-semibold mb-4'>Síguenos</h3>
-              <div className='flex space-x-4'>
-                <a href='#' className='bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors'>
-                  <Facebook className='h-5 w-5' />
-                </a>
-                <a href='#' className='bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors'>
-                  <Twitter className='h-5 w-5' />
-                </a>
-                <a href='#' className='bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors'>
-                  <Instagram className='h-5 w-5' />
-                </a>
-              </div>
-            </div> */}
           </div>
         </div>
 
         <div className='border-t border-white/10 mt-12 pt-8 text-center'>
           <p className='text-gray-300'>© {new Date().getFullYear()} Grupo Financial. Todos los derechos reservados.</p>
         </div>
-      </div>
+      </motion.div>
     </footer>
   )
 }
