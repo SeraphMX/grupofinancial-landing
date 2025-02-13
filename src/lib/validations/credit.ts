@@ -19,8 +19,8 @@ export const businessFormSchema = personalFormSchema.extend({
     .string()
     .min(2, 'La industria debe tener al menos 2 caracteres')
     .max(50, 'La industria no puede exceder los 50 caracteres')
-    .nullable() // Permite valores null
-    .or(z.literal('')) // Permite valores como string vacío ""
+    .nullable()
+    .or(z.literal(''))
     .refine((value) => value !== null && value !== '', { message: 'Debes seleccionar una opción' }),
   annualRevenue: z.enum(['menos-2m', '2m-10m', '10m-25m', 'mas-25m'], {
     required_error: 'Selecciona los ingresos anuales'

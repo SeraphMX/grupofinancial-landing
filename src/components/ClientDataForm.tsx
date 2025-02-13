@@ -1,10 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Autocomplete, AutocompleteItem, Button, Input, Select, SelectItem } from '@nextui-org/react'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
 import { industries } from '../lib/data/industries'
 import { businessFormSchema, personalFormSchema } from '../lib/validations/credit'
 import type { ClientType } from '../store/creditSlice'
+import { useState, useEffect } from 'react'
+import { validatePhoneNumber } from '../lib/utils/phone'
 
 interface ClientDataFormProps {
   clientType: ClientType
@@ -14,19 +16,66 @@ interface ClientDataFormProps {
 }
 
 const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious }: ClientDataFormProps) => {
+  const [isValidatingPhone, setIsValidatingPhone] = useState(false)
+  const [phoneError, setPhoneError] = useState<string | null>(null)
+
   const {
     register,
     setValue,
     handleSubmit,
     control,
-    formState: { errors }
+    formState: { errors },
+    watch
   } = useForm({
     resolver: zodResolver(clientType === 'business' ? businessFormSchema : personalFormSchema),
     defaultValues
   })
 
+  const phone = watch('phone')
+
+  // Limpiar el error cuando el teléfono tenga 10 dígitos
+  useEffect(() => {
+    if (phone?.length === 10) {
+      setPhoneError(null)
+    }
+  }, [phone])
+
+  const handlePhoneValidation = async (phoneNumber: string) => {
+    try {
+      setIsValidatingPhone(true)
+      setPhoneError(null)
+
+      const formattedPhone = phoneNumber.startsWith('+52') ? phoneNumber : `+52${phoneNumber}`
+      const result = await validatePhoneNumber(formattedPhone)
+
+      if (!result.isValid) {
+        setPhoneError('El número de teléfono no es válido')
+        return false
+      }
+
+      if (!result.isMobile) {
+        setPhoneError('El número debe ser un teléfono móvil')
+        return false
+      }
+
+      return true
+    } catch (error) {
+      console.error('Error validating phone:', error)
+      setPhoneError('Error al validar el número de teléfono')
+      return false
+    } finally {
+      setIsValidatingPhone(false)
+    }
+  }
+
+  const handleFormSubmit = async (data: any) => {
+    const isValid = await handlePhoneValidation(data.phone)
+    if (!isValid) return
+    onSubmit(data)
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
+    <form onSubmit={handleSubmit(handleFormSubmit)} className='space-y-6'>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
         <Input
           {...register('name')}
@@ -49,8 +98,12 @@ const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious }: Cli
           type='tel'
           variant='bordered'
           maxLength={10}
-          isInvalid={!!errors.phone}
-          errorMessage={errors.phone?.message?.toString()}
+          isInvalid={!!errors.phone || !!phoneError}
+          errorMessage={(errors.phone?.message?.toString() || phoneError)}
+          description="Debe ser un número de teléfono móvil"
+          endContent={isValidatingPhone && (
+            <Loader2 className="h-4 w-4 animate-spin text-primary" />
+          )}
         />
         <Input
           {...register('rfc')}
@@ -60,7 +113,7 @@ const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious }: Cli
           isInvalid={!!errors.rfc}
           errorMessage={errors.rfc?.message?.toString()}
           onInput={(e) => {
-            e.currentTarget.value = e.currentTarget.value.toUpperCase() // Cambia el valor visible
+            e.currentTarget.value = e.currentTarget.value.toUpperCase()
             setValue('rfc', e.currentTarget.value, { shouldValidate: true })
           }}
         />
@@ -126,7 +179,12 @@ const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious }: Cli
         <Button type='button' onClick={onPrevious} variant='bordered' startContent={<ArrowLeft className='h-5 w-5' />}>
           Anterior
         </Button>
-        <Button type='submit' color='primary' endContent={<ArrowRight className='h-5 w-5' />}>
+        <Button 
+          type='submit' 
+          color='primary' 
+          endContent={<ArrowRight className='h-5 w-5' />}
+          isLoading={isValidatingPhone}
+        >
           Continuar
         </Button>
       </div>
