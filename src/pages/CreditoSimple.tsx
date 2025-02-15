@@ -1,18 +1,20 @@
-import { Tab, Tabs } from '@nextui-org/react'
+import { Button, Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup, Tab, Tabs } from '@nextui-org/react'
 import { ArrowLeft, Check } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import RelatedProducts from '../components/RelatedProducts'
+import type { ClientType } from '../store/creditSlice'
 
 const CreditoSimple = () => {
   const navigate = useNavigate()
   const [selectedTab, setSelectedTab] = useState('sin-garantia')
+  const [clientType, setClientType] = useState<ClientType>('personal')
 
   const getFeatures = (withGuarantee: boolean) => {
     if (withGuarantee) {
       return [
-        'Montos desde $500,000 hasta $30,000,000 MXN',
-        'Plazos desde 12 hasta 180 meses',
+        'Montos desde $500,000 hasta $50,000,000 MXN',
+        'Plazos desde 12 hasta 120 meses',
         'Tasa de interés preferencial',
         'Pagos fijos mensuales',
         'Aprobación en 72 horas',
@@ -33,29 +35,81 @@ const CreditoSimple = () => {
     ]
   }
 
-  const requirementsBasic = [
-    'Identificación oficial vigente',
-    'Comprobante de domicilio reciente',
-    'Estados de cuenta bancarios (últimos 6 meses)',
-    'Estados financieros (para empresas)',
-    'Historial crediticio favorable'
-  ]
+  const getRequirements = (isPersonal: boolean) => {
+    const basicRequirements = [
+      'Comprobante de domicilio',
+      'Estados de cuenta bancarios (últimos 6 meses)',
+      <>
+        Reporte de Historial crediticio
+        <Popover showArrow>
+          <PopoverTrigger>
+            <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
+              <span className='font-bold text-lg'>?</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className='px-1 py-2 max-w-[300px]'>
+              <div className='text-lg font-bold'>¿Por qué es necesario?</div>
+              <div className='text-small'>
+                El reporte de historial crediticio es un requisito para cualquier trámite, ya que nos permite conocer tu perfil financiero.
+                Sin embargo, en créditos con garantía, no es un factor determinante para la aprobación. Aunque tu historial tenga algunas
+                irregularidades, aún puedes calificar, ya que la garantía respalda el crédito.
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </>,
+      <>
+        Clave CIEC
+        <Popover showArrow>
+          <PopoverTrigger>
+            <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
+              <span className='font-bold text-lg'>?</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className='px-1 py-2 max-w-[300px]'>
+              <div className='text-lg font-bold'>¿Por qué es necesario?</div>
+              <div className='text-small'>
+                Para gestionar tu solicitud, necesitamos contar con tu clave CIEC, ya que nos permite acceder a tu información fiscal de
+                manera segura y verificar tu situación ante el SAT. Únicamente consultamos los datos necesarios para agilizar el trámite de
+                tu crédito.
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </>
+    ]
 
-  const requirementsGuarantee = [
-    ...requirementsBasic,
-    'Escrituras de la propiedad',
-    'Certificado de libertad de gravamen',
-    'Boletas prediales al corriente',
-    'Avalúo comercial reciente',
-    'Acta de matrimonio (si aplica)',
-    'Identificación oficial del cónyuge (si aplica)'
-  ]
+    if (isPersonal) {
+      return [
+        'Identificación oficial vigente',
+        'Constancia de situación fiscal',
+        ...basicRequirements,
+        'Acta de matrimonio (si aplica)',
+        'Identificación oficial del cónyuge (si aplica)'
+      ]
+    }
+
+    return [
+      'Acta constitutiva',
+      'Constancia de situación fiscal',
+      ...basicRequirements,
+      'Declaracion mensual mas reciente',
+      'Declaraciones anuales (últimos 2 ejercicios)',
+      'Estados financieros (últimos 2 ejercicios)',
+      'Identificación oficial del representante legal',
+      'Constancia Situación fiscal del representante legal ',
+      'Comprobante de domicilio del representante legal'
+    ]
+  }
 
   const handleCotizarClick = () => {
     navigate('/cotizador', {
       state: {
         from: 'credito-simple',
-        withGuarantee: selectedTab === 'con-garantia'
+        withGuarantee: selectedTab === 'con-garantia',
+        clientType
       }
     })
   }
@@ -70,15 +124,15 @@ const CreditoSimple = () => {
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
           <div className='p-8 mb-4'>
-            <h1 className='text-4xl font-bold text-primary '>Crédito Simple</h1>
+            <h1 className='text-4xl font-bold text-primary mb-4'>Crédito Simple</h1>
             <p className='text-lg text-gray-600 '>
-              El Crédito Simple es la solución ideal para financiar proyectos específicos, capital de trabajo o expandir tu negocio. Con
-              términos claros y tasas competitivas, te ayudamos a alcanzar tus objetivos financieros.
+              Es la solución ideal para financiar proyectos específicos, capital de trabajo o expandir tu negocio. Con términos claros y
+              tasas competitivas, te ayudamos a alcanzar tus objetivos financieros.
             </p>
           </div>
 
           <div className='bg-blue-50 rounded-xl p-8 self-center'>
-            <h4 className='text-2xl font-semibold text-primary '>¿Para qué lo puedes usar?</h4>
+            <h4 className='text-xl mb:text-2xl font-semibold text-primary mb-4'>¿Para qué lo puedes usar?</h4>
             <p className=' text-gray-600'>
               Utiliza el Crédito Simple para capital de trabajo, compra de inventario, expansión de negocio, adquisición de equipo, pago a
               proveedores o consolidación de deudas. Ideal para impulsar tu empresa o financiar proyectos específicos.
@@ -86,7 +140,7 @@ const CreditoSimple = () => {
           </div>
 
           <div className='bg-gray-50 rounded-xl  p-8 place-self-start w-full'>
-            <h2 className='text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
+            <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
             <ul className='space-y-4'>
               {getFeatures(selectedTab === 'con-garantia').map((feature, index) => (
                 <li key={index} className='flex items-start'>
@@ -99,7 +153,21 @@ const CreditoSimple = () => {
 
           <div>
             <div className='bg-white shadow-lg rounded-xl p-8  border border-gray-200'>
-              <h2 className='text-2xl font-semibold text-primary mb-6'>Requisitos</h2>
+              <div className='md:flex items-center justify-between mb-6'>
+                <h2 className='mb-4 md:mb-0 text-xl mb:text-2xl font-semibold text-primary '>Requisitos</h2>
+                <RadioGroup
+                  value={clientType}
+                  onValueChange={(value) => setClientType(value as ClientType)}
+                  orientation='horizontal'
+                  classNames={{
+                    label: 'text-primary font-semibold mb-2'
+                  }}
+                >
+                  <Radio value='personal'>Persona Física</Radio>
+                  <Radio value='business'>Empresa</Radio>
+                </RadioGroup>
+              </div>
+
               <Tabs
                 aria-label='Opciones de crédito'
                 color='primary'
@@ -123,7 +191,7 @@ const CreditoSimple = () => {
                 >
                   <div className='mt-4'>
                     <ul className='space-y-4'>
-                      {requirementsBasic.map((requirement, index) => (
+                      {getRequirements(clientType === 'personal').map((requirement, index) => (
                         <li key={index} className='flex items-start'>
                           <span className='w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0' />
                           <span className='text-gray-600'>{requirement}</span>
@@ -142,7 +210,53 @@ const CreditoSimple = () => {
                 >
                   <div className='mt-4'>
                     <ul className='space-y-4'>
-                      {requirementsGuarantee.map((requirement, index) => (
+                      {[
+                        ...getRequirements(clientType === 'personal'),
+                        <>
+                          Escrituras de la propiedad
+                          <Popover showArrow>
+                            <PopoverTrigger>
+                              <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
+                                <span className='font-bold text-lg'>?</span>
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent>
+                              <div className='px-1 py-2 max-w-[300px]'>
+                                <div className='text-lg font-bold'>¿Por qué es necesario?</div>
+                                <div className='text-small'>
+                                  Necesitamos las escrituras de la propiedad con el sello del Registro Público de la Propiedad, que
+                                  demuestre que está libre de gravámenes (es decir, que no tiene deudas o cargas pendientes). Este
+                                  documento, conocido como primer testimonio, es esencial para asegurarnos de que la propiedad pueda ser
+                                  utilizada como garantía en el crédito.
+                                </div>
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                        </>,
+                        'Boleta Predial',
+                        'Recibo de agua',
+                        'Fotos, planos y ubicación de la propiedad',
+                        <>
+                          Avalúo comercial
+                          <Popover showArrow>
+                            <PopoverTrigger>
+                              <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
+                                <span className='font-bold text-lg'>?</span>
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent>
+                              <div className='px-1 py-2 max-w-[300px]'>
+                                <div className='text-lg font-bold'>¿Por qué es necesario?</div>
+                                <div className='text-small'>
+                                  Requesimos contar con un avalúo comercial actualizado de la propiedad, ya que este nos permite conocer su
+                                  valor actual en el mercado. Este documento asegura de que la propiedad cubra el monto del crédito
+                                  solicitado y para cumplir con los requisitos establecidos por las instituciones financieras.
+                                </div>
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                        </>
+                      ].map((requirement, index) => (
                         <li key={index} className='flex items-start'>
                           <span className='w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0' />
                           <span className='text-gray-600'>{requirement}</span>
@@ -153,11 +267,9 @@ const CreditoSimple = () => {
                 </Tab>
               </Tabs>
             </div>
-          </div>
 
-          <div>
-            <div className='bg-primary/5 rounded-xl p-8'>
-              <h2 className='text-2xl font-semibold text-primary mb-4'>¿Listo para comenzar?</h2>
+            <div className='bg-primary/5 rounded-xl p-8 mt-8'>
+              <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-4'>¿Listo para comenzar?</h2>
               <p className='text-gray-600 mb-6'>
                 Inicia tu solicitud en línea de manera sencilla, te responderemos en menos de 24 horas y te ayudaremos en todas las etapas
                 para conseguir el financiamiento que necesitas.
