@@ -28,6 +28,7 @@ interface CreditState {
   assetValue?: number; // Para arrendamiento
   loanAmount?: number; // Para arrendamiento (80% del valor del activo)
   arrendamientoType?: 'liquidez' | 'compra'; // Tipo de arrendamiento
+  isOTPVerified: boolean;
 }
 
 const calculatePayments = (amount: number, term: number, rate: number) => {
@@ -62,6 +63,7 @@ const initialState: CreditState = {
     industry: '',
     annualRevenue: '',
   },
+  isOTPVerified: false
 };
 
 // Calcular los pagos iniciales
@@ -82,7 +84,7 @@ export const creditSlice = createSlice({
     },
     setClientType: (state, action: PayloadAction<ClientType>) => {
       state.clientType = action.payload;
-      state.step = 2;
+       state.step = 2;
       state.amount = action.payload === 'personal' ? 100000 : 500000;
       const payments = calculatePayments(
         state.amount,
@@ -155,6 +157,9 @@ export const creditSlice = createSlice({
       state.monthlyPayment = payments.monthlyPayment;
       state.totalPayment = payments.totalPayment;
     },
+    setOTPVerified: (state, action: PayloadAction<boolean>) => {
+      state.isOTPVerified = action.payload;
+    },
     nextStep: (state) => {
       state.step += 1;
     },
@@ -173,6 +178,7 @@ export const {
   setTerm,
   setClientData,
   setArrendamientoData,
+  setOTPVerified,
   nextStep,
   prevStep,
   resetForm,

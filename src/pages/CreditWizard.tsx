@@ -1,13 +1,15 @@
 import { Button, cn, Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup, Slider } from '@nextui-org/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Building2, CircleDollarSign, User, MessageCircle as WhatsappIcon } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import AmountSelector from '../components/AmountSelector'
 import ClientDataForm from '../components/ClientDataForm'
+import OTPVerification from '../components/OTPVerification'
 import RelatedProducts from '../components/RelatedProducts'
 import { createSolicitud } from '../services/solicitudes'
+import { sendOTP } from '../lib/utils/phone'
 import {
   nextStep,
   prevStep,
@@ -17,6 +19,7 @@ import {
   setClientType,
   setCreditType,
   setGuaranteeType,
+  setOTPVerified,
   setTerm,
   type ClientType,
   type GuaranteeType
@@ -26,9 +29,11 @@ import type { RootState } from '../store/store'
 const CreditWizard = () => {
   const dispatch = useDispatch()
   const location = useLocation()
-  const { step, clientType, amount, term, monthlyPayment, totalPayment, clientData, guaranteeType } = useSelector(
+  const { step, clientType, amount, term, monthlyPayment, totalPayment, clientData, guaranteeType, isOTPVerified } = useSelector(
     (state: RootState) => state.credit
   )
+  const [isLoadingOTP, setIsLoadingOTP] = useState(false)
+  const [otpError, setOtpError] = useState<string | null>(null)
 
   useEffect(() => {
     if (location.state?.from === 'home') {
@@ -54,8 +59,26 @@ const CreditWizard = () => {
   }
 
   const handleClientDataSubmit = async (data: any) => {
+    dispatch(setClientData(data))
+    setIsLoadingOTP(true)
     try {
-      dispatch(setClientData(data))
+      const result = await sendOTP(data.phone)
+      if (result.success) {
+        dispatch(nextStep())
+      } else {
+        setOtpError('Error al enviar el código de verificación')
+      }
+    } catch (error) {
+      console.error('Error sending OTP:', error)
+      setOtpError('Error al enviar el código de verificación')
+    } finally {
+      setIsLoadingOTP(false)
+    }
+  }
+
+  const handleOTPVerified = async () => {
+    dispatch(setOTPVerified(true))
+    try {
       await createSolicitud({
         tipo_credito: 'simple',
         tipo_cliente: clientType!,
@@ -63,17 +86,17 @@ const CreditWizard = () => {
         monto: amount,
         plazo: term,
         pago_mensual: monthlyPayment,
-        nombre: data.name,
-        email: data.email,
-        telefono: data.phone,
-        rfc: data.rfc,
-        nombre_empresa: data.companyName,
-        industria: data.industry,
-        ingresos_anuales: data.annualRevenue
+        nombre: clientData.name,
+        email: clientData.email,
+        telefono: clientData.phone,
+        rfc: clientData.rfc,
+        nombre_empresa: clientData.companyName,
+        industria: clientData.industry,
+        ingresos_anuales: clientData.annualRevenue
       })
       dispatch(nextStep())
     } catch (error) {
-      console.error('Error al enviar la solicitud:', error)
+      console.error('Error creating solicitud:', error)
     }
   }
 
@@ -159,7 +182,6 @@ const CreditWizard = () => {
                   showSteps={true}
                   classNames={{
                     base: 'max-w-full',
-
                     labelWrapper: 'mb-2',
                     mark: 'mt-1'
                   }}
@@ -250,11 +272,27 @@ const CreditWizard = () => {
                 onSubmit={handleClientDataSubmit}
                 onPrevious={() => dispatch(prevStep())}
               />
+              {otpError && (
+                <div className="mt-4 text-red-500 text-center">
+                  {otpError}
+                </div>
+              )}
             </div>
           </motion.div>
         )
 
       case 4:
+        return (
+          <motion.div className='space-y-4' initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}>
+            <OTPVerification
+              phone={clientData.phone}
+              onVerified={handleOTPVerified}
+              onBack={() => dispatch(prevStep())}
+            />
+          </motion.div>
+        )
+
+      case 5:
         return (
           <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} className='space-y-8 '>
             <div className='text-center'>
@@ -332,27 +370,27 @@ const CreditWizard = () => {
   return (
     <div className='pt-20 min-h-screen'>
       <div className='container pt-5'>
-        <div className='max-w-3xl mx-auto '>
+        <div className='max-w-3xl mx-auto'>
           <div className='flex justify-between items-center'>
             <Link to='/' className='inline-flex items-center text-primary hover:text-primary/80' onClick={() => dispatch(resetForm())}>
               <ArrowLeft className='h-5 w-5 mr-2' />
               Regresar
             </Link>
-            <div className='flex items-center space-x-2 '>
+            <div className='flex items-center space-x-2'>
               <CircleDollarSign className='h-6 w-6 text-primary' />
               <h1 className='text-xl font-semibold text-primary'>Crédito Simple</h1>
             </div>
           </div>
         </div>
       </div>
-      <div className='container '>
-        <div className='max-w-3xl mx-auto '>
-          <div className='flex justify-between items-center mb-5 '></div>
+      <div className='container'>
+        <div className='max-w-3xl mx-auto'>
+          <div className='flex justify-between items-center mb-5'></div>
 
           <AnimatePresence mode='wait'>
             <motion.div
               className='bg-gray-50 rounded-2xl py-6 md:px-24 md:py-10 lg:min-h-[420px]'
-              key={step} // Asegura que Framer Motion detecte el cambio de pasos
+              key={step}
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
@@ -361,7 +399,7 @@ const CreditWizard = () => {
               {renderStep()}
             </motion.div>
           </AnimatePresence>
-          <div className='bg-gray-50 hidden 2xl:block '>
+          <div className='bg-gray-50 hidden 2xl:block'>
             <RelatedProducts />
           </div>
         </div>
