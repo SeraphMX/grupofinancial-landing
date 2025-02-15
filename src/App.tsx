@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ReactNode, Suspense } from 'react'
 import { Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom'
 import Benefits from './components/Benefits'
@@ -25,98 +25,98 @@ import Terms from './pages/Terms'
 function AnimatedRoutes() {
   const location = useLocation()
   return (
-    <AnimatePresence mode='wait'>
-      <Routes location={location} key={location.pathname}>
-        <Route
-          path='/'
-          element={
-            <PageWrapper>
-              <HomePage />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path='/productos/credito-simple'
-          element={
-            <PageWrapper>
-              <CreditoSimple />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path='/productos/credito-revolvente'
-          element={
-            <PageWrapper>
-              <CreditoRevolvente />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path='/productos/arrendamiento'
-          element={
-            <PageWrapper>
-              <Arrendamiento />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path='/cotizador'
-          element={
-            <PageWrapper>
-              <CreditWizard />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path='/cotizador-revolvente'
-          element={
-            <PageWrapper>
-              <CotizadorRevolvente />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path='/cotizador-arrendamiento'
-          element={
-            <PageWrapper>
-              <CotizadorArrendamiento />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path='/nosotros'
-          element={
-            <PageWrapper>
-              <AboutUs />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path='/privacidad'
-          element={
-            <PageWrapper>
-              <PrivacyPolicy />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path='/terminos'
-          element={
-            <PageWrapper>
-              <Terms />
-            </PageWrapper>
-          }
-        />
-        <Route
-          path='/comisiones'
-          element={
-            <PageWrapper>
-              <Fees />
-            </PageWrapper>
-          }
-        />
-      </Routes>
-    </AnimatePresence>
+    //<AnimatePresence mode='wait'> TODO:Rompe la UI
+    <Routes location={location} key={location.pathname}>
+      <Route
+        path='/'
+        element={
+          <PageWrapper>
+            <HomePage />
+          </PageWrapper>
+        }
+      />
+      <Route
+        path='/productos/credito-simple'
+        element={
+          <PageWrapper>
+            <CreditoSimple />
+          </PageWrapper>
+        }
+      />
+      <Route
+        path='/productos/credito-revolvente'
+        element={
+          <PageWrapper>
+            <CreditoRevolvente />
+          </PageWrapper>
+        }
+      />
+      <Route
+        path='/productos/arrendamiento'
+        element={
+          <PageWrapper>
+            <Arrendamiento />
+          </PageWrapper>
+        }
+      />
+      <Route
+        path='/cotizador'
+        element={
+          <PageWrapper>
+            <CreditWizard />
+          </PageWrapper>
+        }
+      />
+      <Route
+        path='/cotizador-revolvente'
+        element={
+          <PageWrapper>
+            <CotizadorRevolvente />
+          </PageWrapper>
+        }
+      />
+      <Route
+        path='/cotizador-arrendamiento'
+        element={
+          <PageWrapper>
+            <CotizadorArrendamiento />
+          </PageWrapper>
+        }
+      />
+      <Route
+        path='/nosotros'
+        element={
+          <PageWrapper>
+            <AboutUs />
+          </PageWrapper>
+        }
+      />
+      <Route
+        path='/privacidad'
+        element={
+          <PageWrapper>
+            <PrivacyPolicy />
+          </PageWrapper>
+        }
+      />
+      <Route
+        path='/terminos'
+        element={
+          <PageWrapper>
+            <Terms />
+          </PageWrapper>
+        }
+      />
+      <Route
+        path='/comisiones'
+        element={
+          <PageWrapper>
+            <Fees />
+          </PageWrapper>
+        }
+      />
+    </Routes>
+    //</AnimatePresence>
   )
 }
 
