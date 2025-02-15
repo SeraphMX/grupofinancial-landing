@@ -11,7 +11,7 @@ const CreditoSimple = () => {
   const getFeatures = (withGuarantee: boolean) => {
     if (withGuarantee) {
       return [
-        'Montos desde $500,000 hasta $50,000,000 MXN',
+        'Montos desde $500,000 hasta $30,000,000 MXN',
         'Plazos desde 12 hasta 180 meses',
         'Tasa de interés preferencial',
         'Pagos fijos mensuales',
@@ -24,9 +24,9 @@ const CreditoSimple = () => {
     return [
       'Montos desde $100,000 hasta $5,000,000 MXN',
       'Plazos desde 12 hasta 60 meses',
-      'Tasa de interés fija durante todo el crédito',
+      'Tasa de interés preferencial',
       'Pagos fijos mensuales',
-      'Aprobación en 48 horas',
+      'Aprobación en 72 horas',
       'Sin penalización por pago anticipado',
       'Documentación mínima requerida',
       'Asesoría personalizada'
@@ -36,7 +36,7 @@ const CreditoSimple = () => {
   const requirementsBasic = [
     'Identificación oficial vigente',
     'Comprobante de domicilio reciente',
-    'Estados de cuenta bancarios (últimos 3 meses)',
+    'Estados de cuenta bancarios (últimos 6 meses)',
     'Estados financieros (para empresas)',
     'Historial crediticio favorable'
   ]
@@ -168,7 +168,7 @@ const CreditoSimple = () => {
             </div>
           </div>
 
-          <div className="md:col-span-2">
+          <div className='md:col-span-2'>
             <RelatedProducts />
           </div>
         </div>
