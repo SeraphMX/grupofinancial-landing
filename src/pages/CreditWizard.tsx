@@ -8,8 +8,8 @@ import AmountSelector from '../components/AmountSelector'
 import ClientDataForm from '../components/ClientDataForm'
 import OTPVerification from '../components/OTPVerification'
 import RelatedProducts from '../components/RelatedProducts'
-import { createSolicitud } from '../services/solicitudes'
 import { sendOTP } from '../lib/utils/phone'
+import { createSolicitud } from '../services/solicitudes'
 import {
   nextStep,
   prevStep,
@@ -272,11 +272,7 @@ const CreditWizard = () => {
                 onSubmit={handleClientDataSubmit}
                 onPrevious={() => dispatch(prevStep())}
               />
-              {otpError && (
-                <div className="mt-4 text-red-500 text-center">
-                  {otpError}
-                </div>
-              )}
+              {otpError && <div className='mt-4 text-red-500 text-center'>{otpError}</div>}
             </div>
           </motion.div>
         )
@@ -284,23 +280,19 @@ const CreditWizard = () => {
       case 4:
         return (
           <motion.div className='space-y-4' initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}>
-            <OTPVerification
-              phone={clientData.phone}
-              onVerified={handleOTPVerified}
-              onBack={() => dispatch(prevStep())}
-            />
+            <OTPVerification phone={clientData.phone} onVerified={handleOTPVerified} onBack={() => dispatch(prevStep())} />
           </motion.div>
         )
 
       case 5:
         return (
-          <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} className='space-y-8 '>
+          <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} className='space-y-4 '>
             <div className='text-center'>
-              <h2 className='text-2xl font-bold text-primary mb-4'>¡Diste el primer paso!</h2>
-              <p className='text-gray-600 mb-8'>Hemos recibido tu información y un asesor se pondrá en contacto contigo pronto.</p>
+              <h2 className='text-2xl font-bold text-primary mb-2'>¡Diste el primer paso!</h2>
             </div>
 
             <div className='bg-white p-6 rounded-xl shadow-lg space-y-6'>
+              <p className='text-gray-600 mb-4'>Hemos recibido tu información y un asesor se pondrá en contacto contigo pronto.</p>
               <h3 className='text-xl font-semibold text-primary mb-4'>Resumen de tu solicitud</h3>
 
               <div className='grid grid-cols-2 gap-4'>
@@ -308,7 +300,7 @@ const CreditWizard = () => {
                   <p className='text-sm text-gray-600'>Tipo de Crédito</p>
                   <p className='font-semibold'>
                     {clientType === 'personal' ? 'Personal' : 'Empresarial'}{' '}
-                    {guaranteeType === 'con-garantia' ? 'con Garantía' : 'sin Garantía'}
+                    {guaranteeType === 'con-garantia' ? 'con garantía' : 'sin garantía'}
                   </p>
                 </div>
                 <div>
@@ -322,24 +314,6 @@ const CreditWizard = () => {
                 <div>
                   <p className='text-sm text-gray-600'>Pago Mensual</p>
                   <p className='font-semibold'>{formatCurrency(monthlyPayment)}</p>
-                </div>
-              </div>
-
-              <div className='border-t pt-6'>
-                <h4 className='font-semibold text-primary mb-4'>Datos de Contacto</h4>
-                <div className='grid grid-cols-2 gap-4'>
-                  <div>
-                    <p className='text-sm text-gray-600'>Nombre</p>
-                    <p className='font-semibold'>{clientData.name}</p>
-                  </div>
-                  <div>
-                    <p className='text-sm text-gray-600'>Teléfono</p>
-                    <p className='font-semibold'>{clientData.phone}</p>
-                  </div>
-                  <div className='col-span-2'>
-                    <p className='text-sm text-gray-600'>Correo Electrónico</p>
-                    <p className='font-semibold'>{clientData.email}</p>
-                  </div>
                 </div>
               </div>
 
