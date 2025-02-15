@@ -174,7 +174,7 @@ const CreditWizard = () => {
                   size='md'
                   step={12}
                   minValue={12}
-                  maxValue={guaranteeType === 'con-garantia' ? 180 : 60}
+                  maxValue={guaranteeType === 'con-garantia' ? 120 : 60}
                   value={term}
                   onChange={(value) => dispatch(setTerm(Number(value)))}
                   className='max-w-full'
