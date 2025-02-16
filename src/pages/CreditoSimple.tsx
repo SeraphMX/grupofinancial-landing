@@ -1,12 +1,16 @@
 import { Button, Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup, Tab, Tabs } from '@nextui-org/react'
-import { ArrowLeft, Check } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import BackButton from '../components/BackButton'
 import RelatedProducts from '../components/RelatedProducts'
-import type { ClientType } from '../store/creditSlice'
+import { setCreditType, type ClientType } from '../store/creditSlice'
 
 const CreditoSimple = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  dispatch(setCreditType('simple'))
   const [selectedTab, setSelectedTab] = useState('sin-garantia')
   const [clientType, setClientType] = useState<ClientType>('personal')
 
@@ -117,10 +121,7 @@ const CreditoSimple = () => {
   return (
     <div className='pt-20'>
       <div className='container py-12'>
-        <Link to='/' className='inline-flex items-center text-primary hover:text-primary/80 mb-8'>
-          <ArrowLeft className='h-5 w-5 mr-2' />
-          Volver al inicio
-        </Link>
+        <BackButton />
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
           <div className='p-8 mb-4'>
@@ -134,8 +135,8 @@ const CreditoSimple = () => {
           <div className='bg-blue-50 rounded-xl p-8 self-center'>
             <h4 className='text-xl mb:text-2xl font-semibold text-primary mb-4'>¿Para qué lo puedes usar?</h4>
             <p className=' text-gray-600'>
-              Utiliza el Crédito Simple para capital de trabajo, compra de inventario, expansión de negocio, adquisición de equipo, pago a
-              proveedores o consolidación de deudas. Ideal para impulsar tu empresa o financiar proyectos específicos.
+              Para capital de trabajo, compra de inventario, expansión de negocio, adquisición de equipo, pago a proveedores o consolidación
+              de deudas. Ideal para impulsar tu empresa o financiar proyectos específicos.
             </p>
           </div>
 
@@ -248,7 +249,7 @@ const CreditoSimple = () => {
                               <div className='px-1 py-2 max-w-[300px]'>
                                 <div className='text-lg font-bold'>¿Por qué es necesario?</div>
                                 <div className='text-small'>
-                                  Requesimos contar con un avalúo comercial actualizado de la propiedad, ya que este nos permite conocer su
+                                  Requerimos contar con un avalúo comercial actualizado de la propiedad, ya que este nos permite conocer su
                                   valor actual en el mercado. Este documento asegura de que la propiedad cubra el monto del crédito
                                   solicitado y para cumplir con los requisitos establecidos por las instituciones financieras.
                                 </div>
@@ -267,21 +268,21 @@ const CreditoSimple = () => {
                 </Tab>
               </Tabs>
             </div>
-
-            <div className='bg-primary/5 rounded-xl p-8 mt-8'>
-              <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-4'>¿Listo para comenzar?</h2>
-              <p className='text-gray-600 mb-6'>
-                Inicia tu solicitud en línea de manera sencilla, te responderemos en menos de 24 horas y te ayudaremos en todas las etapas
-                para conseguir el financiamiento que necesitas.
-              </p>
-              <button onClick={handleCotizarClick} className='btn-primary w-full'>
-                Solicita un crédito simple
-              </button>
-            </div>
           </div>
 
-          <div className='md:col-span-2'>
+          <div className='order-6 md:order-5'>
             <RelatedProducts />
+          </div>
+
+          <div className='bg-primary/5 rounded-xl p-8  order-5 md:order-6 self-start'>
+            <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-4'>¿Listo para comenzar?</h2>
+            <p className='text-gray-600 mb-6 text-lg'>
+              Inicia tu solicitud en línea de manera sencilla, te responderemos en menos de 24 horas y te ayudaremos en todas las etapas
+              para conseguir el financiamiento que necesitas.
+            </p>
+            <button onClick={handleCotizarClick} className='btn-primary w-full'>
+              Solicita un crédito simple
+            </button>
           </div>
         </div>
       </div>
