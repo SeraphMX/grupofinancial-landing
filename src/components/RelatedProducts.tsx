@@ -1,38 +1,7 @@
-import { Building, RefreshCw, Wallet } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import type { CreditType } from '../store/creditSlice'
+import { products } from '../lib/data/products'
 import type { RootState } from '../store/store'
-
-const products: Array<{
-  id: CreditType
-  icon: any
-  title: string
-  description: string
-  path: string
-}> = [
-  {
-    id: 'simple',
-    icon: Wallet,
-    title: 'Crédito Simple',
-    description: 'Financiamiento a medida con tasas competitivas y plazos flexibles.',
-    path: '/productos/credito-simple'
-  },
-  {
-    id: 'revolvente',
-    icon: RefreshCw,
-    title: 'Crédito Revolvente',
-    description: 'Línea de crédito renovable que te permite disponer de fondos según tus necesidades.',
-    path: '/productos/credito-revolvente'
-  },
-  {
-    id: 'arrendamiento',
-    icon: Building,
-    title: 'Arrendamiento',
-    description: 'Solución ideal para adquirir activos sin comprometer tu capital.',
-    path: '/productos/arrendamiento'
-  }
-]
 
 const RelatedProducts = () => {
   const { creditType } = useSelector((state: RootState) => state.credit)
@@ -42,21 +11,23 @@ const RelatedProducts = () => {
 
   return (
     <div className='bg-gray-50 rounded-xl p-8'>
-      <h2 className='text-2xl font-semibold text-primary mb-6'>Conoce otras opciones de financiamiento</h2>
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+      <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6 text-left'>Otras opciones de financiamiento</h2>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 pb-4'>
         {relatedProducts.map((product) => (
           <Link
             key={product.id}
             to={product.path}
-            className='bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300'
+            className='bg-white  rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300'
           >
-            <div className='flex items-start space-x-4'>
-              <div className='w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0'>
-                <product.icon className='h-6 w-6 text-primary' />
-              </div>
+            <div className='flex flex-col items-start '>
+              <header className='flex items-center  gap-2 p-3'>
+                <div className='w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center'>
+                  <product.icon className='h-5 w-5 text-primary' />
+                </div>
+                <h3 className='text-xl md:text-lg font-semibold text-primary '>{product.title}</h3>
+              </header>
               <div>
-                <h3 className='text-xl font-semibold text-primary mb-2'>{product.title}</h3>
-                <p className='text-gray-600'>{product.description}</p>
+                <p className='text-gray-600 p-3 pt-0'>{product.description}</p>
               </div>
             </div>
           </Link>

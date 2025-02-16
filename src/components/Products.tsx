@@ -1,29 +1,5 @@
-import { Building, RefreshCw, Wallet } from 'lucide-react'
 import { Link } from 'react-router-dom'
-
-const products = [
-  {
-    id: 'credito-simple',
-    icon: Wallet,
-    title: 'Crédito Simple',
-    description: 'Financiamiento a medida con tasas competitivas y plazos flexibles para impulsar tu negocio o proyecto personal.',
-    features: ['Tasas competitivas', 'Plazos flexibles', 'Sin ningun tipo de  adelanto']
-  },
-  {
-    id: 'credito-revolvente',
-    icon: RefreshCw,
-    title: 'Crédito Revolvente',
-    description: 'Línea de crédito renovable que te permite disponer de fondos según tus necesidades de manera continua.',
-    features: ['Disponibilidad inmediata', 'Pagos flexibles', 'Renovación automática']
-  },
-  {
-    id: 'arrendamiento',
-    icon: Building,
-    title: 'Arrendamiento',
-    description: 'Solución ideal para adquirir activos sin comprometer tu capital, con beneficios fiscales y financieros.',
-    features: ['Beneficios fiscales', 'Sin inversión inicial', 'Opción a compra']
-  }
-]
+import { products } from '../lib/data/products'
 
 const Products = () => {
   return (
@@ -56,7 +32,7 @@ const Products = () => {
                     </li>
                   ))}
                 </ul>
-                <Link to={`/productos/${product.id}`} className='btn-primary w-full'>
+                <Link to={product.path} className='btn-primary w-full'>
                   Ver detalles
                 </Link>
               </div>
