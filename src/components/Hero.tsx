@@ -34,8 +34,8 @@ const Hero = () => {
                 Te ayudamos a conseguir el impulso que necesitas
               </h1>
               <p className='text-lg md:text-2xl text-gray-100 mb-8 animate-slide-up text-balance ' style={{ animationDelay: '0.2s' }}>
-                Ofrecemos <strong className='md:text-3xl '>soluciones financieras</strong> personalizadas para hacer realidad tus proyectos{' '}
-                <strong className='md:text-3xl'>sin importar tu historial crediticio.</strong>
+                Ofrecemos <strong className='text-xl md:text-3xl '>soluciones financieras</strong> personalizadas para hacer realidad tus
+                proyectos <strong className='text-xl md:text-3xl'>sin importar tu historial crediticio.</strong>
               </p>
               <Link
                 to='/cotizador'
