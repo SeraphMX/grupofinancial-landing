@@ -13,7 +13,7 @@ import ScrollToTop from './components/ScrollToTop'
 import Testimonials from './components/Testimonials'
 import AboutUs from './pages/AboutUs'
 import Arrendamiento from './pages/Arrendamiento'
-import CotizadorArrendamiento from './pages/CotizadorArrendamiento'
+import CotizadorArrendamientoOld from './pages/CotizadorArrendamiento'
 import CotizadorRevolvente from './pages/CotizadorRevolvente'
 import CreditoRevolvente from './pages/CreditoRevolvente'
 import CreditoSimple from './pages/CreditoSimple'
@@ -79,7 +79,7 @@ function AnimatedRoutes() {
         path='/cotizador-arrendamiento'
         element={
           <PageWrapper>
-            <CotizadorArrendamiento />
+            <CotizadorArrendamientoOld />
           </PageWrapper>
         }
       />

@@ -12,8 +12,8 @@ const CallToAction = () => {
 
   const paths: Record<CreditType, string> = {
     simple: '/cotizador',
-    revolvente: '/cotizador-revolvente',
-    arrendamiento: '/cotizador-arrendamiento'
+    revolvente: '/cotizador',
+    arrendamiento: '/cotizador'
   }
 
   const handleCotizarClick = () => {

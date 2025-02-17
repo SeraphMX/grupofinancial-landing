@@ -1,12 +1,15 @@
 import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../assets/branding/logo.svg'
+import { resetForm } from '../store/creditSlice'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const location = useLocation()
 
   const scrollToSection = (sectionId: string) => {
@@ -68,6 +71,10 @@ const Header = () => {
     }
   ]
 
+  const handleClickSimulator = () => {
+    dispatch(resetForm())
+  }
+
   return (
     <header className='fixed w-full bg-white shadow-sm z-50'>
       <nav className='container mx-auto px-4'>
@@ -89,7 +96,7 @@ const Header = () => {
                 {item.name}
               </button>
             ))}
-            <Link to='/cotizador' className='btn-primary'>
+            <Link onClick={handleClickSimulator} to='/cotizador' className='btn-primary'>
               Solicitar Crédito
             </Link>
           </div>
@@ -121,7 +128,14 @@ const Header = () => {
                   {item.name}
                 </button>
               ))}
-              <Link to='/cotizador' className='block px-3 py-2 btn-primary w-full text-center' onClick={() => setIsMenuOpen(false)}>
+              <Link
+                to='/cotizador'
+                className='block px-3 py-2 btn-primary w-full text-center'
+                onClick={() => {
+                  setIsMenuOpen(false)
+                  handleClickSimulator()
+                }}
+              >
                 Solicita tu crédito ahora!
               </Link>
             </div>

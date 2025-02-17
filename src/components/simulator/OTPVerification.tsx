@@ -1,7 +1,7 @@
 import { Alert, Button, cn, InputOtp } from '@nextui-org/react'
 import { ArrowLeft, Loader2 } from 'lucide-react'
 import { useState } from 'react'
-import { verifyOTP } from '../lib/utils/phone'
+import { verifyOTP } from '../../lib/utils/phone'
 
 interface OTPVerificationProps {
   phone: string
