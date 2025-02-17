@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import RelatedProducts from '../components/RelatedProducts'
 import { ClientType, setCreditType } from '../store/creditSlice'
+import { GuaranteeRequirements } from './GuaranteeRequirements'
 
 const Arrendamiento = () => {
   const navigate = useNavigate()
@@ -15,32 +16,137 @@ const Arrendamiento = () => {
   const [clientType, setClientType] = useState<ClientType>('personal')
 
   const getFeatures = (isPersonal: boolean) => {
+    const commonFeatures = [
+      <>
+        <span className='font-semibold'>Arrendamiento puro</span>
+        <Popover showArrow>
+          <PopoverTrigger>
+            <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
+              <span className='font-bold text-lg'>?</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className='px-1 py-2 max-w-[300px]'>
+              <div className='text-lg font-bold'>¿Qué significa?</div>
+              <div className='text-small'>
+                El <strong>arrendamiento puro</strong> es un sistema en el que puedes usar un equipo o bien (como maquinaria, vehículos o
+                incluso propiedades) pagando una renta mensual durante un plazo acordado. Al finalizar ese plazo, tienes varias opciones:{' '}
+                <strong>comprar el bien, devolverlo o extender el arrendamiento</strong> por más tiempo. De este modo podemos ayudarte a
+                financiar el equipo que tu empresa necesita para operar y crecer, sin necesidad de realizar una gran inversión inicial.
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>{' '}
+        o <span className='font-semibold'>SL&B</span>{' '}
+        <Popover showArrow>
+          <PopoverTrigger>
+            <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
+              <span className='font-bold text-lg'>?</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className='px-1 py-2 max-w-[300px]'>
+              <div className='text-lg font-bold'>¿Qué significa?</div>
+              <div className='text-small'>
+                El <strong>Sale & Lease Back</strong> (SL&B) es una operación financiera en la que <i>"vendes"</i> tus bienes (como
+                maquinaria, equipos o inmuebles) a una arrendadora, y luego los <i>"rentas"</i> para seguir utilizándolos. De esta forma, la
+                obtienes <strong>liquidez inmediata</strong> la venta. Este mecanismo es ideal si necesitas obtener capital{' '}
+                <strong>sin afectar tus operaciones diarias</strong> ya que les permite seguir utilizando los bienes esenciales para su
+                negocio , solo realizando un pago mensual.
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </>,
+      'Plazos desde 12 hasta 48 meses',
+      'Sin comisión por anualidad',
+      <>
+        Seguro de daños sobre el Activo
+        <Popover showArrow>
+          <PopoverTrigger>
+            <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
+              <span className='font-bold text-lg'>?</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className='px-1 py-2 max-w-[300px]'>
+              <div className='text-lg font-bold'>¿Qué significa?</div>
+              <div className='text-small'>
+                No pagas intereses ni comisiones por la parte del crédito que no gastas. Los intereses solo se generan sobre el monto que
+                dispongas y <strong>únicamente por el tiempo que lo utilices</strong>. Una vez que pagas el saldo utilizado, dejas de
+                generar intereses.
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </>,
+      <>
+        Financiamos hasta el 80% del valor del activo
+        <Popover showArrow>
+          <PopoverTrigger>
+            <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
+              <span className='font-bold text-lg'>?</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className='px-1 py-2 max-w-[300px]'>
+              <div className='text-lg font-bold'>¿Bajo que condiciones?</div>
+              <div className='text-small'>
+                <p className='mb-2 text-medium'>Si cumples con ciertos criterios, como:</p>
+                <ul className='text-small mb-2'>
+                  <li>• Un historial de pago puntual. </li>
+                  <li>• Un nivel de uso adecuado dentro del límite aprobado.</li>
+                  <li>• Una evaluación periódica que confirme tu capacidad de pago y solvencia financiera.</li>
+                </ul>
+                <p className='mt-1 text-tiny/3'>
+                  Si es así, además de la renovación, puedes solicitar un <strong>aumento en tu línea de crédito</strong> si lo requieres
+                  para disponer de un mayor monto cuando lo necesites. Así, sigues contando con liquidez sin necesidad de solicitar un nuevo
+                  crédito cada vez.
+                </p>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </>
+    ]
+
     if (isPersonal) {
       return [
-        'Montos desde $500,000 hasta $50,000,000 MXN',
-        'Plazos desde 12 hasta 120 meses',
-        'Tasa de interés preferencial',
-        'Pagos fijos mensuales',
-        'Aprobación en 72 horas',
-        'Sin penalización por pago anticipado',
-        'Mayor monto de financiamiento',
-        'Mejores condiciones crediticias'
+        ...commonFeatures,
+        <>
+          Montos desde <strong>$500,000</strong> hasta <strong>$10,000,000</strong> MXN
+        </>,
+        <>
+          Tasa desde el <strong>3%</strong> anual
+        </>
       ]
     }
     return [
-      'Montos desde $100,000 hasta $5,000,000 MXN',
-      'Plazos desde 12 hasta 60 meses',
-      'Tasa de interés preferencial',
-      'Pagos fijos mensuales',
-      'Aprobación en 72 horas',
-      'Sin penalización por pago anticipado',
-      'Documentación mínima requerida',
-      'Asesoría personalizada'
+      ...commonFeatures,
+      <>
+        Montos desde <strong>$500,000</strong> hasta <strong>$20,000,000</strong> MXN
+      </>,
+      <>
+        Tasa desde el <strong>2.5%</strong> anual
+      </>,
+      'Mayor monto de financiamiento'
     ]
+  }
+
+  const getBenefits = () => {
+    const commonBenefits = [
+      'No impacta tus estados financieros',
+      'Programación presupuestal eficiente',
+      'Conserva líneas de crédito',
+      'Deducible de impuestos',
+      'Minimiza los riesgos de obsolescencia'
+    ]
+    return commonBenefits
   }
 
   const getRequirements = (isPersonal: boolean) => {
     const basicRequirements = [
+      'Constancia de situación fiscal',
       'Comprobante de domicilio',
       'Estados de cuenta bancarios (últimos 6 meses)',
       <>
@@ -82,13 +188,15 @@ const Arrendamiento = () => {
             </div>
           </PopoverContent>
         </Popover>
-      </>
+      </>,
+      'Declaraciones anuales (últimos 2 ejercicios)',
+      'Estados financieros (últimos 2 ejercicios)',
+      ...GuaranteeRequirements
     ]
 
     if (isPersonal) {
       return [
         'Identificación oficial vigente',
-        'Constancia de situación fiscal',
         ...basicRequirements,
         'Acta de matrimonio (si aplica)',
         'Identificación oficial del cónyuge (si aplica)'
@@ -97,7 +205,6 @@ const Arrendamiento = () => {
 
     return [
       'Acta constitutiva',
-      'Constancia de situación fiscal',
       ...basicRequirements,
       'Declaracion mensual mas reciente',
       'Declaraciones anuales (últimos 2 ejercicios)',
@@ -138,15 +245,28 @@ const Arrendamiento = () => {
           </div>
 
           <div className='bg-gray-50 rounded-xl  p-8 place-self-start w-full'>
-            <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
-            <ul className='space-y-4'>
-              {getFeatures(clientType === 'personal').map((feature, index) => (
-                <li key={index} className='flex items-start'>
-                  <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
-                  <span className='text-gray-600'>{feature}</span>
-                </li>
-              ))}
-            </ul>
+            <div className='mb-6'>
+              <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
+              <ul className='space-y-4'>
+                {getFeatures(clientType === 'personal').map((feature, index) => (
+                  <li key={index} className='flex items-start'>
+                    <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
+                    <span className='text-gray-600'>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Beneficios</h2>
+              <ul className='space-y-4'>
+                {getBenefits().map((benefit, index) => (
+                  <li key={index} className='flex items-start'>
+                    <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
+                    <span className='text-gray-600'>{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <div>
