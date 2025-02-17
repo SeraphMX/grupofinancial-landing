@@ -28,12 +28,15 @@ const ScrollToTop = () => {
       }
     } else {
       // Si estamos en una página de productos, aseguramos el scroll suave al principio
+      console.log('Cambio de pagina')
       if (
         pathname === '/productos/credito-simple' ||
         pathname === '/productos/credito-revolvente' ||
         pathname === '/productos/arrendamiento'
       ) {
         window.scrollTo(0, 0) // Resetear el scroll suavemente entre productos
+      } else {
+        window.scrollTo(0, 0) // Si no estamos en productos, ir a la parte superior
       }
     }
   }, [pathname])
