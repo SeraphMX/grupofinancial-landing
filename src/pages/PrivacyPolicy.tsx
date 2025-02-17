@@ -24,7 +24,7 @@ const PrivacyPolicy = () => {
         <div className='max-w-3xl mx-auto prose'>
           <section className='mb-12'>
             <h2 className='text-2xl font-bold text-primary mb-4'>
-              1. Identidad y Domicilio de los Responsables del Tratamiento de los Datos Personales
+              1. Identidad y domicilio de los responsables del tratamiento de los datos personales
             </h2>
             <p className='text-gray-600 mb-4'>
               Grupo Financial es responsable del tratamiento de los Datos Personales en términos del presente Aviso de Privacidad bajo la
@@ -61,7 +61,7 @@ const PrivacyPolicy = () => {
             </ul>
           </section>
           <section className='mb-12'>
-            <h2 className='text-2xl font-bold text-primary mb-4'>2. Finalidades del Tratamiento de Datos</h2>
+            <h2 className='text-2xl font-bold text-primary mb-4'>2. Finalidades del tratamiento de datos personales</h2>
             <p className='text-gray-600 mb-4'>Grupo Financial da tratamiento a sus datos personales para:</p>
             <ul className='list-disc pl-6 text-gray-600'>
               <li>
@@ -90,7 +90,7 @@ const PrivacyPolicy = () => {
             </p>
           </section>
           <section className='mb-12'>
-            <h2 className='text-2xl font-bold text-primary mb-4'>3. Información que Recopilamos</h2>
+            <h2 className='text-2xl font-bold text-primary mb-4'>3. Información que recopilamos</h2>
             <p className='text-gray-600 mb-4'>Grupo Financial recopila los siguientes datos personales:</p>
             <ul className='list-disc pl-6 text-gray-600'>
               <li>Datos de identificación</li>
@@ -104,7 +104,7 @@ const PrivacyPolicy = () => {
             </ul>
           </section>
           <section className='mb-12'>
-            <h2 className='text-2xl font-bold text-primary mb-4'>3. Transferencia de datos</h2>
+            <h2 className='text-2xl font-bold text-primary mb-4'>4. Transferencia de datos</h2>
             <p className='text-gray-600 mb-4'>Sus datos personales podrán ser compartidos con::</p>
             <ul className='list-disc pl-6 text-gray-600'>
               <li>Empresas pertenecientes al Grupo FINANCIAL</li>
@@ -127,7 +127,7 @@ const PrivacyPolicy = () => {
             </p>
           </section>
           <section className='mb-12'>
-            <h2 className='text-2xl font-bold text-primary mb-4'>4. Protección de Datos</h2>
+            <h2 className='text-2xl font-bold text-primary mb-4'>5. Protección de datos</h2>
             <p className='text-gray-600'>
               Grupo Financial implementa medidas de seguridad para proteger su información contra accesos no autorizados, alteraciones o
               pérdidas.Si usted tiene algún comentario o considera que sus Datos Personales han sufrido algún tipo de vulneración, puede
@@ -139,7 +139,7 @@ const PrivacyPolicy = () => {
             </p>
           </section>
           <section className='mb-12'>
-            <h2 className='text-2xl font-bold text-primary mb-4'>5. Limitación del uso o divulgación</h2>
+            <h2 className='text-2xl font-bold text-primary mb-4'>6. Limitación del uso o divulgación</h2>
             <p className='text-gray-600'>
               Si usted desea suspender la recepción de publicidad o promociones de nuestros productos y servicios bancarios y financieros,
               adicional a que usted puede negarse u oponerse al uso de sus Datos Personales en GRUPO FINANCIAL, también podrá solicitar su
@@ -152,7 +152,7 @@ const PrivacyPolicy = () => {
             </p>
           </section>
           <section className='mb-12'>
-            <h2 className='text-2xl font-bold text-primary mb-4'>5. Derechos ARCO</h2>
+            <h2 className='text-2xl font-bold text-primary mb-4'>7. Derechos ARCO</h2>
             <p className='text-gray-600'>
               Usted tiene derecho a Acceder, Rectificar, Cancelar u Oponerse al tratamiento de sus datos personales. Puede presentar su
               solicitud enviando un correo a{' '}
@@ -163,7 +163,7 @@ const PrivacyPolicy = () => {
             </p>
           </section>
           <section className='mb-12'>
-            <h2 className='text-2xl font-bold text-primary mb-4'>6. Revocación del consentimiento</h2>
+            <h2 className='text-2xl font-bold text-primary mb-4'>8. Revocación del consentimiento</h2>
             <p className='text-gray-600'>
               En caso de querer revocar las autorizaciones proporcionadas a Grupo Financial, respecto al tratamiento de sus Datos
               Personales, usted podrá enviar su solicitud al correo electrónico
@@ -177,7 +177,7 @@ const PrivacyPolicy = () => {
             </p>
           </section>
           <section className='mb-12'>
-            <h2 className='text-2xl font-bold text-primary mb-4'>5. Limitación del uso o divulgación</h2>
+            <h2 className='text-2xl font-bold text-primary mb-4'>9. Uso de cookies, web beacons y otras tecnologías</h2>
             <p className='text-gray-600'>
               Le informamos que en el sitio web de GRUPO FINANCIAL utilizamos Cookies, Web Beacons y tecnologías de geolocalización. Estos
               mecanismos nos permiten recabar datos de manera automática y simultánea para monitorear su comportamiento como usuario de
@@ -192,7 +192,7 @@ const PrivacyPolicy = () => {
             </p>
           </section>
           <section className='mb-12'>
-            <h2 className='text-2xl font-bold text-primary mb-4'>6. Cambios al aviso de privacidad</h2>
+            <h2 className='text-2xl font-bold text-primary mb-4'>10. Cambios al Aviso de Privacidad</h2>
             <p className='text-gray-600'>
               Este aviso de privacidad puede ser modificado. Cualquier cambio será notificado a través de nuestro sitio web o por correo
               electrónico.
