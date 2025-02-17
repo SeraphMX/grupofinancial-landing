@@ -2,14 +2,13 @@ import { Button, Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup } fr
 import { Check } from 'lucide-react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import BackButton from '../components/BackButton'
+import CallToAction from '../components/products/CallToAction'
 import RelatedProducts from '../components/RelatedProducts'
 import { ClientType, setCreditType } from '../store/creditSlice'
 import { GuaranteeRequirements } from './GuaranteeRequirements'
 
 const Arrendamiento = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   dispatch(setCreditType('arrendamiento'))
 
@@ -37,31 +36,34 @@ const Arrendamiento = () => {
             </div>
           </PopoverContent>
         </Popover>{' '}
-        o <span className='font-semibold'>SL&B</span>{' '}
-        <Popover showArrow>
-          <PopoverTrigger>
-            <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
-              <span className='font-bold text-lg'>?</span>
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <div className='px-1 py-2 max-w-[300px]'>
-              <div className='text-lg font-bold'>¿Qué significa?</div>
-              <div className='text-small'>
-                El <strong>Sale & Lease Back</strong> (SL&B) es una operación financiera en la que <i>"vendes"</i> tus bienes (como
-                maquinaria, equipos o inmuebles) a una arrendadora, y luego los <i>"rentas"</i> para seguir utilizándolos. De esta forma, la
-                obtienes <strong>liquidez inmediata</strong> la venta. Este mecanismo es ideal si necesitas obtener capital{' '}
-                <strong>sin afectar tus operaciones diarias</strong> ya que les permite seguir utilizando los bienes esenciales para su
-                negocio , solo realizando un pago mensual.
+        o{' '}
+        <div className='block md:inline-block'>
+          <span className='font-semibold'>SL&B</span>{' '}
+          <Popover showArrow>
+            <PopoverTrigger>
+              <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
+                <span className='font-bold text-lg'>?</span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <div className='px-1 py-2 max-w-[300px]'>
+                <div className='text-lg font-bold'>¿Qué significa?</div>
+                <div className='text-small'>
+                  El <strong>Sale & Lease Back</strong> (SL&B) es una operación financiera en la que <i>"vendes"</i> tus bienes (como
+                  maquinaria, equipos o inmuebles) a una arrendadora, y luego los <i>"rentas"</i> para seguir utilizándolos. De esta forma,
+                  la obtienes <strong>liquidez inmediata</strong> la venta. Este mecanismo es ideal si necesitas obtener capital{' '}
+                  <strong>sin afectar tus operaciones diarias</strong> ya que les permite seguir utilizando los bienes esenciales para su
+                  negocio , solo realizando un pago mensual.
+                </div>
               </div>
-            </div>
-          </PopoverContent>
-        </Popover>
+            </PopoverContent>
+          </Popover>
+        </div>
       </>,
       'Plazos desde 12 hasta 48 meses',
       'Sin comisión por anualidad',
       <>
-        Seguro de daños sobre el Activo
+        Seguro de daños
         <Popover showArrow>
           <PopoverTrigger>
             <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
@@ -72,16 +74,16 @@ const Arrendamiento = () => {
             <div className='px-1 py-2 max-w-[300px]'>
               <div className='text-lg font-bold'>¿Qué significa?</div>
               <div className='text-small'>
-                No pagas intereses ni comisiones por la parte del crédito que no gastas. Los intereses solo se generan sobre el monto que
-                dispongas y <strong>únicamente por el tiempo que lo utilices</strong>. Una vez que pagas el saldo utilizado, dejas de
-                generar intereses.
+                El bien arrendado está protegido con un seguro que cubre daños, robo e imprevistos, brindándote tranquilidad y continuidad
+                operativa. Además, para mayor seguridad y control, se requiere la instalación de un sistema GPS, lo que permite monitorear
+                su ubicación en todo momento y reducir riesgos, asegurando la protección de tu inversión.
               </div>
             </div>
           </PopoverContent>
         </Popover>
       </>,
       <>
-        Financiamos hasta el 80% del valor del activo
+        Financiamiento de hasta el 80% del valor del activo
         <Popover showArrow>
           <PopoverTrigger>
             <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
@@ -92,17 +94,9 @@ const Arrendamiento = () => {
             <div className='px-1 py-2 max-w-[300px]'>
               <div className='text-lg font-bold'>¿Bajo que condiciones?</div>
               <div className='text-small'>
-                <p className='mb-2 text-medium'>Si cumples con ciertos criterios, como:</p>
-                <ul className='text-small mb-2'>
-                  <li>• Un historial de pago puntual. </li>
-                  <li>• Un nivel de uso adecuado dentro del límite aprobado.</li>
-                  <li>• Una evaluación periódica que confirme tu capacidad de pago y solvencia financiera.</li>
-                </ul>
-                <p className='mt-1 text-tiny/3'>
-                  Si es así, además de la renovación, puedes solicitar un <strong>aumento en tu línea de crédito</strong> si lo requieres
-                  para disponer de un mayor monto cuando lo necesites. Así, sigues contando con liquidez sin necesidad de solicitar un nuevo
-                  crédito cada vez.
-                </p>
+                El financiamiento esta <strong>sujeto a una evaluación</strong> y condiciones específicas que dependen de varios factores.
+                Además, el activo a financiar puede ser <strong>nuevo</strong> o de lo contrario con una{' '}
+                <strong>antigüedad máxima de 5 a 10 años</strong>, dependiendo del tipo de bien y su estado.
               </div>
             </div>
           </PopoverContent>
@@ -215,10 +209,6 @@ const Arrendamiento = () => {
     ]
   }
 
-  const handleCotizarClick = () => {
-    navigate('/cotizador-arrendamiento')
-  }
-
   return (
     <div className='pt-20'>
       <div className='container py-12'>
@@ -301,16 +291,7 @@ const Arrendamiento = () => {
             <RelatedProducts />
           </div>
 
-          <div className='bg-primary/5 rounded-xl p-8  order-5 md:order-6 self-start'>
-            <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-4'>¿Listo para comenzar?</h2>
-            <p className='text-gray-600 mb-6 text-lg'>
-              Inicia tu solicitud en línea de manera sencilla, te responderemos en menos de 24 horas y te ayudaremos en todas las etapas
-              para conseguir el financiamiento que necesitas.
-            </p>
-            <button onClick={handleCotizarClick} className='btn-primary w-full'>
-              Solicita arrendamiento financiero
-            </button>
-          </div>
+          <CallToAction />
         </div>
       </div>
     </div>

@@ -2,14 +2,13 @@ import { Alert, Button, cn, Popover, PopoverContent, PopoverTrigger, Radio, Radi
 import { Check, MessageCircleQuestion } from 'lucide-react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import BackButton from '../components/BackButton'
+import CallToAction from '../components/products/CallToAction'
 import RelatedProducts from '../components/RelatedProducts'
 import { ClientType, setCreditType } from '../store/creditSlice'
 import { GuaranteeRequirements } from './GuaranteeRequirements'
 
 const CreditoRevolvente = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   dispatch(setCreditType('revolvente'))
 
@@ -147,10 +146,6 @@ const CreditoRevolvente = () => {
     ]
   }
 
-  const handleCotizarClick = () => {
-    navigate('/cotizador-revolvente')
-  }
-
   // Función para abrir WhatsApp en una nueva pestaña
   const handleWhatsAppClick = () => {
     const phoneNumber = '521234567890'
@@ -269,16 +264,7 @@ const CreditoRevolvente = () => {
             <RelatedProducts />
           </div>
 
-          <div className='bg-primary/5 rounded-xl p-8  order-5 md:order-6 self-start'>
-            <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-4'>¿Listo para comenzar?</h2>
-            <p className='text-gray-600 mb-6 text-lg'>
-              Inicia tu solicitud en línea de manera sencilla, te responderemos en menos de 24 horas y te ayudaremos en todas las etapas
-              para conseguir el financiamiento que necesitas.
-            </p>
-            <button onClick={handleCotizarClick} className='btn-primary w-full'>
-              Solicita un crédito simple
-            </button>
-          </div>
+          <CallToAction />
         </div>
       </div>
     </div>

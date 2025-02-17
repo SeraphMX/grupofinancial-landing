@@ -2,14 +2,13 @@ import { Button, Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup, Tab
 import { Check } from 'lucide-react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import BackButton from '../components/BackButton'
+import CallToAction from '../components/products/CallToAction'
 import RelatedProducts from '../components/RelatedProducts'
 import { setCreditType, type ClientType } from '../store/creditSlice'
 import { GuaranteeRequirements } from './GuaranteeRequirements'
 
 const CreditoSimple = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   dispatch(setCreditType('simple'))
   const [selectedTab, setSelectedTab] = useState('sin-garantia')
@@ -107,16 +106,6 @@ const CreditoSimple = () => {
       'Constancia Situación fiscal del representante legal ',
       'Comprobante de domicilio del representante legal'
     ]
-  }
-
-  const handleCotizarClick = () => {
-    navigate('/cotizador', {
-      state: {
-        from: 'credito-simple',
-        withGuarantee: selectedTab === 'con-garantia',
-        clientType
-      }
-    })
   }
 
   return (
@@ -229,16 +218,7 @@ const CreditoSimple = () => {
             <RelatedProducts />
           </div>
 
-          <div className='bg-primary/5 rounded-xl p-8  order-5 md:order-6 self-start'>
-            <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-4'>¿Listo para comenzar?</h2>
-            <p className='text-gray-600 mb-6 text-lg'>
-              Inicia tu solicitud en línea de manera sencilla, te responderemos en menos de 24 horas y te ayudaremos en todas las etapas
-              para conseguir el financiamiento que necesitas.
-            </p>
-            <button onClick={handleCotizarClick} className='btn-primary w-full'>
-              Solicita un crédito simple
-            </button>
-          </div>
+          <CallToAction />
         </div>
       </div>
     </div>
