@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import BackButton from '../components/BackButton'
 import RelatedProducts from '../components/RelatedProducts'
 import { setCreditType, type ClientType } from '../store/creditSlice'
+import { GuaranteeRequirements } from './GuaranteeRequirements'
 
 const CreditoSimple = () => {
   const navigate = useNavigate()
@@ -211,53 +212,7 @@ const CreditoSimple = () => {
                 >
                   <div className='mt-4'>
                     <ul className='space-y-4'>
-                      {[
-                        ...getRequirements(clientType === 'personal'),
-                        <>
-                          Escrituras de la propiedad
-                          <Popover showArrow>
-                            <PopoverTrigger>
-                              <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
-                                <span className='font-bold text-lg'>?</span>
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent>
-                              <div className='px-1 py-2 max-w-[300px]'>
-                                <div className='text-lg font-bold'>¿Por qué es necesario?</div>
-                                <div className='text-small'>
-                                  Necesitamos las escrituras de la propiedad con el sello del Registro Público de la Propiedad, que
-                                  demuestre que está libre de gravámenes (es decir, que no tiene deudas o cargas pendientes). Este
-                                  documento, conocido como primer testimonio, es esencial para asegurarnos de que la propiedad pueda ser
-                                  utilizada como garantía en el crédito.
-                                </div>
-                              </div>
-                            </PopoverContent>
-                          </Popover>
-                        </>,
-                        'Boleta Predial',
-                        'Recibo de agua',
-                        'Fotos, planos y ubicación de la propiedad',
-                        <>
-                          Avalúo comercial
-                          <Popover showArrow>
-                            <PopoverTrigger>
-                              <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
-                                <span className='font-bold text-lg'>?</span>
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent>
-                              <div className='px-1 py-2 max-w-[300px]'>
-                                <div className='text-lg font-bold'>¿Por qué es necesario?</div>
-                                <div className='text-small'>
-                                  Requerimos contar con un avalúo comercial actualizado de la propiedad, ya que este nos permite conocer su
-                                  valor actual en el mercado. Este documento asegura de que la propiedad cubra el monto del crédito
-                                  solicitado y para cumplir con los requisitos establecidos por las instituciones financieras.
-                                </div>
-                              </div>
-                            </PopoverContent>
-                          </Popover>
-                        </>
-                      ].map((requirement, index) => (
+                      {[...getRequirements(clientType === 'personal'), ...GuaranteeRequirements].map((requirement, index) => (
                         <li key={index} className='flex items-start'>
                           <span className='w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0' />
                           <span className='text-gray-600'>{requirement}</span>
