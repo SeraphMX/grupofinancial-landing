@@ -40,10 +40,10 @@ const Hero = () => {
               <Link
                 to='/cotizador'
                 state={{ from: 'home' }}
-                className='btn-secondary text-lg animate-slide-up inline-flex items-center hover:bg-white hover:text-secondary transition-colors'
+                className='btn-secondary text-xl animate-slide-up inline-flex items-center hover:bg-white hover:text-secondary transition-colors'
                 style={{ animationDelay: '0.4s' }}
               >
-                Quiero un crédito
+                ¡Quiero un crédito!
                 <ArrowRight className='ml-2 h-5 w-5' />
               </Link>
             </div>
