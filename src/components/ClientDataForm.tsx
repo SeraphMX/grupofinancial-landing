@@ -3,6 +3,7 @@ import { Autocomplete, AutocompleteItem, Button, Input, Select, SelectItem } fro
 import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { industries } from '../lib/data/industries'
 import { validatePhoneNumber } from '../lib/utils/phone'
 import { businessFormSchema, personalFormSchema } from '../lib/validations/credit'
@@ -171,6 +172,18 @@ const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious }: Cli
           </>
         )}
       </div>
+
+      <p className='text-tiny text-gray-400'>
+        Al continuar, aceptas que tus datos sean tratados conforme a nuestro{' '}
+        <Link to='/privacidad' target='_blank' className='text-primary-300'>
+          Aviso de Privacidad
+        </Link>{' '}
+        y confirmas que has leído y aceptado nuestros{' '}
+        <Link className='text-primary-300' target='_blank' to={'terminos'}>
+          Términos y Condiciones
+        </Link>
+        .
+      </p>
 
       <div className='flex justify-between mt-8'>
         <Button type='button' onClick={onPrevious} variant='bordered' startContent={<ArrowLeft className='h-5 w-5' />}>
