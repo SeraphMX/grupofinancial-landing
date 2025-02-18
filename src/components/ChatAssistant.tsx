@@ -18,7 +18,7 @@ const initialMessages: Message[] = [
 ]
 
 // Páginas donde no queremos mostrar el chat
-const excludedPaths = ['/cotizador', '/cotizador-revolvente', '/cotizador-arrendamiento']
+const excludedPaths = ['/solicitud', '/solicitud-revolvente', '/solicitud-arrendamiento']
 
 // Tiempo de espera antes de mostrar el chat (en milisegundos)
 const CHAT_DELAY = 20000 // 3 minutos

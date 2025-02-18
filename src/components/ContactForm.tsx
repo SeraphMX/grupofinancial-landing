@@ -5,7 +5,7 @@ const ContactForm = () => {
   const navigate = useNavigate()
 
   const handleClick = () => {
-    navigate('/cotizador')
+    navigate('/solicitud')
   }
 
   return (

@@ -38,7 +38,7 @@ const Hero = () => {
                 proyectos <strong className='text-xl md:text-3xl'>sin importar tu historial crediticio.</strong>
               </p>
               <Link
-                to='/cotizador'
+                to='/solicitud'
                 state={{ from: 'home' }}
                 className='btn-secondary text-xl animate-slide-up inline-flex items-center hover:bg-white hover:text-secondary transition-colors'
                 style={{ animationDelay: '0.4s' }}

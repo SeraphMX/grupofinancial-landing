@@ -11,15 +11,15 @@ const CallToAction = () => {
   // Mapeo de rutas según el tipo de crédito
 
   const paths: Record<CreditType, string> = {
-    simple: '/cotizador',
-    revolvente: '/cotizador',
-    arrendamiento: '/cotizador'
+    simple: '/solicitud-credito-simple',
+    revolvente: '/solicitud-credito-revolvente',
+    arrendamiento: '/solicitud-arrendamiento'
   }
 
   const handleCotizarClick = () => {
     console.log(paths[creditType])
 
-    const selectedPath = paths[creditType] || '/cotizador' // Ruta por defecto si no coincide
+    const selectedPath = paths[creditType] || '/solicitud' // Ruta por defecto si no coincide
     navigate(selectedPath, {
       state: {
         from: 'credito-simple'

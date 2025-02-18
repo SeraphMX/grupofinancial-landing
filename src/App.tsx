@@ -13,14 +13,12 @@ import ScrollToTop from './components/ScrollToTop'
 import Testimonials from './components/Testimonials'
 import AboutUs from './pages/AboutUs'
 import Arrendamiento from './pages/Arrendamiento'
-import CotizadorArrendamientoOld from './pages/CotizadorArrendamiento'
-import CotizadorRevolvente from './pages/CotizadorRevolvente'
 import CreditoRevolvente from './pages/CreditoRevolvente'
 import CreditoSimple from './pages/CreditoSimple'
-import CreditWizard from './pages/CreditWizard'
 import Fees from './pages/Fees'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import Terms from './pages/Terms'
+import CreditWizard from './pages/Wizard'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -60,7 +58,7 @@ function AnimatedRoutes() {
         }
       />
       <Route
-        path='/cotizador'
+        path='/solicitud'
         element={
           <PageWrapper>
             <CreditWizard />
@@ -68,21 +66,30 @@ function AnimatedRoutes() {
         }
       />
       <Route
-        path='/cotizador-revolvente'
+        path='/solicitud-credito-simple'
         element={
           <PageWrapper>
-            <CotizadorRevolvente />
+            <CreditWizard />
           </PageWrapper>
         }
       />
       <Route
-        path='/cotizador-arrendamiento'
+        path='/solicitud-credito-revolvente'
         element={
           <PageWrapper>
-            <CotizadorArrendamientoOld />
+            <CreditWizard />
           </PageWrapper>
         }
       />
+      <Route
+        path='/solicitud-arrendamiento'
+        element={
+          <PageWrapper>
+            <CreditWizard />
+          </PageWrapper>
+        }
+      />
+
       <Route
         path='/nosotros'
         element={

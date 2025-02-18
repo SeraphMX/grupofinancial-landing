@@ -96,7 +96,7 @@ const Header = () => {
                 {item.name}
               </button>
             ))}
-            <Link onClick={handleClickSimulator} to='/cotizador' className='btn-primary'>
+            <Link onClick={handleClickSimulator} to='/solicitud' className='btn-primary'>
               Solicitar Crédito
             </Link>
           </div>
@@ -129,7 +129,7 @@ const Header = () => {
                 </button>
               ))}
               <Link
-                to='/cotizador'
+                to='/solicitud'
                 className='block px-3 py-2 btn-primary w-full text-center'
                 onClick={() => {
                   setIsMenuOpen(false)
