@@ -60,8 +60,9 @@ const CreditoRevolvente = () => {
 
         <div className='grid grid-cols-1 gap-4'>
           <div className='bg-gray-50 p-4 rounded-lg text-center'>
-            <p className='text-sm text-gray-600 mb-1'>Tu pago mensual (aproximado)</p>
+            <p className='text-sm text-gray-600 mb-1'>Tu pago mensual*</p>
             <p className='text-3xl font-bold text-primary'>{formatCurrency(monthlyPayment)}</p>
+            <small className='text-gray-400'>*Calcúlo aproximado</small>
           </div>
         </div>
 
