@@ -9,7 +9,7 @@ const ContactForm = () => {
   }
 
   return (
-    <section id='contact' className='section-padding bg-gray-50'>
+    <section className='section-padding bg-gray-50'>
       <div className='container'>
         <div className='max-w-3xl mx-auto'>
           <div className='text-center mb-12'>
