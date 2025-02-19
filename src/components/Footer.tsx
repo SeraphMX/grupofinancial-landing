@@ -9,7 +9,7 @@ const Footer = () => {
   const opacity = useTransform(scrollYProgress, [0.8, 1], [0, 1])
 
   return (
-    <footer className='bg-primary text-white sticky bottom-0 left-0 w-full z-0 '>
+    <footer id='contact' className='bg-primary text-white sticky bottom-0 left-0 w-full z-0 '>
       <motion.div className='container py-12' style={{ y: footerY, opacity: opacity }}>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           <div>
