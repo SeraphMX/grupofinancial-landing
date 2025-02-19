@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom'
 import { products } from '../lib/data/products'
 import type { RootState } from '../store/store'
 
-const RelatedProducts = () => {
+interface RelatedProductsProps {
+  simulators?: boolean
+}
+
+const RelatedProducts = ({ simulators = false }: RelatedProductsProps) => {
   const { creditType } = useSelector((state: RootState) => state.credit)
 
   // Filtrar el producto actual basado en el tipo de crédito
@@ -11,12 +15,14 @@ const RelatedProducts = () => {
 
   return (
     <div className='bg-gray-50 rounded-xl p-8'>
-      <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6 text-left'>Otras opciones de financiamiento</h2>
+      <h2 className={`text-xl md:text-2xl font-semibold text-primary mb-6 ${simulators ? 'text-center' : 'text-left'}`}>
+        Otras opciones de financiamiento
+      </h2>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6 pb-4'>
         {relatedProducts.map((product) => (
           <Link
             key={product.id}
-            to={product.path}
+            to={simulators ? product.simulator : product.path}
             className='bg-white  rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300'
           >
             <div className='flex flex-col items-start '>
