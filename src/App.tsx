@@ -1,24 +1,20 @@
 import { motion } from 'framer-motion'
 import { ReactNode, Suspense } from 'react'
 import { Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom'
-import Benefits from './components/Benefits'
 import ChatAssistant from './components/ChatAssistant'
-import ContactForm from './components/ContactForm'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import Hero from './components/Hero'
 import PageLoader from './components/PageLoader'
-import Products from './components/Products'
 import ScrollToTop from './components/ScrollToTop'
-import Testimonials from './components/Testimonials'
+import CreditWizard from './components/Wizard'
 import AboutUs from './pages/AboutUs'
 import Arrendamiento from './pages/Arrendamiento'
 import CreditoRevolvente from './pages/CreditoRevolvente'
 import CreditoSimple from './pages/CreditoSimple'
 import Fees from './pages/Fees'
+import Home from './pages/Home'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import Terms from './pages/Terms'
-import CreditWizard from './pages/Wizard'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -29,7 +25,7 @@ function AnimatedRoutes() {
         path='/'
         element={
           <PageWrapper>
-            <HomePage />
+            <Home />
           </PageWrapper>
         }
       />
@@ -69,7 +65,7 @@ function AnimatedRoutes() {
         path='/solicitud-credito-simple'
         element={
           <PageWrapper>
-            <CreditWizard />
+            <CreditWizard pCreditType='simple' />
           </PageWrapper>
         }
       />
@@ -77,7 +73,7 @@ function AnimatedRoutes() {
         path='/solicitud-credito-revolvente'
         element={
           <PageWrapper>
-            <CreditWizard />
+            <CreditWizard pCreditType='revolvente' />
           </PageWrapper>
         }
       />
@@ -85,7 +81,7 @@ function AnimatedRoutes() {
         path='/solicitud-arrendamiento'
         element={
           <PageWrapper>
-            <CreditWizard />
+            <CreditWizard pCreditType='arrendamiento' />
           </PageWrapper>
         }
       />
@@ -136,20 +132,6 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children }) => {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
       {children}
     </motion.div>
-  )
-}
-
-function HomePage() {
-  return (
-    <>
-      <Hero />
-      {/* <CompanyInfo />
-      <Partners /> */}
-      <Benefits />
-      <Products />
-      <Testimonials />
-      <ContactForm />
-    </>
   )
 }
 
