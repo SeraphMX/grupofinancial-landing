@@ -40,7 +40,7 @@ const BackButton = () => {
   }
 
   return (
-    <button onClick={handleGoBack} className='inline-flex items-center text-primary hover:text-primary/80 mb-8'>
+    <button onClick={handleGoBack} className='inline-flex items-center text-primary hover:text-primary/80 '>
       <ArrowLeft className='h-5 w-5 mr-2' />
       {hasHistory ? 'Volver atrás' : 'Página principal'}
     </button>
