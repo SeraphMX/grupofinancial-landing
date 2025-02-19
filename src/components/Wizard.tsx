@@ -99,6 +99,10 @@ const CreditWizard: FC<CreditWizardProps> = ({ pCreditType }) => {
     }
   }
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [step])
+
   const handleOTPVerified = async () => {
     dispatch(setOTPVerified(true))
     try {
