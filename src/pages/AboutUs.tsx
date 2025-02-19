@@ -2,6 +2,7 @@ import { Accordion, AccordionItem } from '@nextui-org/react'
 import { Blocks, HelpCircle } from 'lucide-react'
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component'
 import 'react-vertical-timeline-component/style.min.css'
+import HelmetSEO from '../components/HelmetSEO'
 
 const AboutUs = () => {
   const processSteps = [
@@ -58,84 +59,107 @@ const AboutUs = () => {
     }
   ]
 
-  return (
-    <div className='pt-20'>
-      <div className='bg-primary/5 py-16'>
-        <div className='container'>
-          <div className='max-w-3xl mx-auto text-center'>
-            <h1 className='text-4xl font-bold text-primary mb-6'>Conoce más sobre nosotros</h1>
-            <p className='text-lg text-gray-600'>
-              Somos una empresa financiera comprometida con el crecimiento de personas y empresas, ofreciendo soluciones crediticias
-              innovadoras y accesibles. Nuestros asesores tienen mas de 20 años de experiencia en el sector financiero y están listos para
-              ayudarte en todo momento.
-            </p>
-          </div>
-        </div>
-      </div>
+  const schemaData = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'Sobre Nosotros - Grupo Financial',
+    url: 'https://www.grupofinancial.com/nosotros',
+    description: 'Conoce a Grupo Financial, una fintech especializada en créditos y soluciones financieras para empresas y personas.',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Grupo Financial',
+      logo: 'https://www.grupofinancial.com/logo.png'
+    }
+  }
 
-      <section className='bg-primary/5  py-16'>
-        <div className='container'>
-          <div className='max-w-3xl mx-auto'>
-            <h2 className='text-3xl font-bold text-primary mb-8 text-center'>Nuestro Proceso</h2>
-            <div>
-              <p className='text-lg text-gray-600 mb-8'>
-                Nuestro proceso de solicitud es rápido y sencillo, diseñado para que obtengas tu crédito en pocos pasos. Aquí te explicamos
-                cómo funciona:
+  return (
+    <>
+      <HelmetSEO
+        title='Sobre Nosotros - Grupo Financial'
+        description='Conoce a Grupo Financial, una fintech especializada en créditos y soluciones financieras para empresas y personas.'
+        keywords='quiénes somos, Grupo Financial, fintech, créditos para empresas'
+        canonicalUrl='https://www.grupofinancial.com/nosotros'
+        openGraph={{ type: 'website', siteName: 'Grupo Financial', locale: 'es_MX' }}
+        schemaData={schemaData}
+      />
+      <div className='pt-20'>
+        <div className='bg-primary/5 py-16'>
+          <div className='container'>
+            <div className='max-w-3xl mx-auto text-center'>
+              <h1 className='text-4xl font-bold text-primary mb-6'>Conoce más sobre nosotros</h1>
+              <p className='text-lg text-gray-600'>
+                Somos una empresa financiera comprometida con el crecimiento de personas y empresas, ofreciendo soluciones crediticias
+                innovadoras y accesibles. Nuestros asesores tienen mas de 20 años de experiencia en el sector financiero y están listos para
+                ayudarte en todo momento.
               </p>
             </div>
+          </div>
+        </div>
 
-            <VerticalTimeline>
-              {processSteps.map((step, index) => (
-                <VerticalTimelineElement
-                  key={index}
-                  className='vertical-timeline-element--work'
-                  iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                  icon={<Blocks />}
-                >
-                  <h3 className='text-secondary text-xl font-semibold'>
-                    {index + 1} {step.title}
-                  </h3>
+        <section className='bg-primary/5  py-16'>
+          <div className='container'>
+            <div className='max-w-3xl mx-auto'>
+              <h2 className='text-3xl font-bold text-primary mb-8 text-center'>Nuestro Proceso</h2>
+              <div>
+                <p className='text-lg text-gray-600 mb-8'>
+                  Nuestro proceso de solicitud es rápido y sencillo, diseñado para que obtengas tu crédito en pocos pasos. Aquí te
+                  explicamos cómo funciona:
+                </p>
+              </div>
 
-                  <p>{step.description}</p>
-                </VerticalTimelineElement>
-              ))}
-            </VerticalTimeline>
+              <VerticalTimeline>
+                {processSteps.map((step, index) => (
+                  <VerticalTimelineElement
+                    key={index}
+                    className='vertical-timeline-element--work'
+                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
+                    icon={<Blocks />}
+                  >
+                    <h3 className='text-secondary text-xl font-semibold'>
+                      {index + 1} {step.title}
+                    </h3>
 
-            <div className='space-y-6'>
-              <div className='flex items-start space-x-4 bg-white p-6 rounded-lg shadow-sm'>
-                <div className='w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0'>
-                  <span className='text-primary font-semibold'>A</span>
-                </div>
-                <div>
-                  <h3 className='text-xl font-semibold text-primary mb-2'>Estas listo para iniciar con nosotros?</h3>
-                  <p className='text-gray-600'>Solicita tu credito ahora </p>
+                    <p>{step.description}</p>
+                  </VerticalTimelineElement>
+                ))}
+              </VerticalTimeline>
+
+              <div className='space-y-6'>
+                <div className='flex items-start space-x-4 bg-white p-6 rounded-lg shadow-sm'>
+                  <div className='w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0'>
+                    <span className='text-primary font-semibold'>A</span>
+                  </div>
+                  <div>
+                    <h3 className='text-xl font-semibold text-primary mb-2'>Estas listo para iniciar con nosotros?</h3>
+                    <p className='text-gray-600'>Solicita tu credito ahora </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className='bg-gray-50 py-16'>
-        <div className='container'>
-          <div className='max-w-3xl mx-auto'>
-            <h2 className='text-3xl font-bold text-primary mb-8 text-center'>Preguntas Frecuentes</h2>
-            <Accordion variant='bordered'>
-              {faqs.map((faq, index) => (
-                <AccordionItem
-                  key={index}
-                  aria-label={faq.question}
-                  title={faq.question}
-                  indicator={<HelpCircle className='text-primary' />}
-                >
-                  <p className='text-gray-600'>{faq.answer}</p>
-                </AccordionItem>
-              ))}
-            </Accordion>
+        <section className='bg-gray-50 py-16'>
+          <div className='container'>
+            <div className='max-w-3xl mx-auto'>
+              <h2 className='text-3xl font-bold text-primary mb-8 text-center'>Preguntas Frecuentes</h2>
+              <Accordion variant='bordered'>
+                {faqs.map((faq, index) => (
+                  <AccordionItem
+                    key={index}
+                    aria-label={faq.question}
+                    title={faq.question}
+                    indicator={<HelpCircle className='text-primary' />}
+                  >
+                    <p className='text-gray-600'>{faq.answer}</p>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   )
 }
 

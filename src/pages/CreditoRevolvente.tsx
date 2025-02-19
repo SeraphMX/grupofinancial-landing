@@ -3,10 +3,11 @@ import { Check, MessageCircleQuestion } from 'lucide-react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import BackButton from '../components/BackButton'
+import { GuaranteeRequirements } from '../components/GuaranteeRequirements'
+import HelmetSEO from '../components/HelmetSEO'
 import CallToAction from '../components/products/CallToAction'
 import RelatedProducts from '../components/RelatedProducts'
 import { ClientType, setCreditType } from '../store/creditSlice'
-import { GuaranteeRequirements } from './GuaranteeRequirements'
 
 const CreditoRevolvente = () => {
   const dispatch = useDispatch()
@@ -155,119 +156,154 @@ const CreditoRevolvente = () => {
     window.open(whatsappUrl, '_blank')
   }
 
+  const schemaData = {
+    '@context': 'https://schema.org',
+    '@type': 'FinancialProduct',
+    name: 'Crédito Revolvente',
+    url: 'https://www.grupofinancial.com/credito-revolvente',
+    description: 'Accede a un Crédito Revolvente para disponer de capital cuando lo necesites. Montos desde $100,000 hasta $10 millones.',
+    provider: {
+      '@type': 'Organization',
+      name: 'Grupo Financial',
+      url: 'https://www.grupofinancial.com'
+    },
+    mainEntity: {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: '¿Cómo funciona el Crédito Revolvente?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Te otorgamos una línea de crédito y puedes disponer del capital cuando lo necesites, pagando solo por lo que uses.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: '¿Cuál es el monto máximo?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Puedes acceder a montos desde $100,000 hasta $10 millones, dependiendo de tu perfil financiero.'
+          }
+        }
+      ]
+    }
+  }
   return (
-    <div className='pt-20'>
-      <div className='container py-12'>
-        <BackButton />
-
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-          <div className='p-8 mb-4'>
-            <h1 className='text-4xl font-bold text-primary mb-4'>Crédito Revolvente</h1>
-            <p className='text-lg text-gray-600 '>
-              Te ofrece la flexibilidad que necesitas para manejar tu flujo de efectivo. Con los recursos disponibles de inmediato cuando
-              los necesites y pagando solo por lo que utilizas.
-            </p>
-          </div>
-
-          <div className='bg-blue-50 rounded-xl p-8 self-center'>
-            <h4 className='text-xl mb:text-2xl font-semibold text-primary mb-4'>¿Para qué lo puedes usar?</h4>
-            <p className=' text-gray-600'>
-              Para gestionar flujos de efectivo, cubrir gastos imprevistos, comprar inventario, pagar nóminas o aprovechar
-              <strong> oportunidades de negocio.</strong> Al ser renovable conforme lo vas pagando, es ideal para mantener{' '}
-              <strong>liquidez constante</strong> y financiar tus operaciones de manera recurrente sin necesidad de solicitar un nuevo
-              crédito cada vez.
-            </p>
-          </div>
-
-          <div>
-            <div className='mb-4'>
-              <div className='bg-gray-50 rounded-xl  p-8 place-self-start w-full'>
-                <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
+    <>
+      <HelmetSEO
+        title='Crédito Revolvente - Grupo Financial'
+        description='Obtén un Crédito Revolvente y accede a capital cuando lo necesites. Montos desde $100,000 hasta $10 millones.'
+        keywords='Crédito Revolvente, línea de crédito, financiamiento flexible, capital de trabajo'
+        canonicalUrl='https://www.grupofinancial.com/credito-revolvente'
+        openGraph={{ type: 'article', siteName: 'Grupo Financial', locale: 'es_MX' }}
+        schemaData={schemaData}
+      />
+      <div className='pt-20'>
+        <div className='container py-10'>
+          <BackButton />
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+            <div className='p-8 mb-4'>
+              <h1 className='text-4xl font-bold text-primary mb-4'>Crédito Revolvente</h1>
+              <p className='text-lg text-gray-600 '>
+                Te ofrece la flexibilidad que necesitas para manejar tu flujo de efectivo. Con los recursos disponibles de inmediato cuando
+                los necesites y pagando solo por lo que utilizas.
+              </p>
+            </div>
+            <div className='bg-blue-50 rounded-xl p-8 self-center'>
+              <h4 className='text-xl mb:text-2xl font-semibold text-primary mb-4'>¿Para qué lo puedes usar?</h4>
+              <p className=' text-gray-600'>
+                Para gestionar flujos de efectivo, cubrir gastos imprevistos, comprar inventario, pagar nóminas o aprovechar
+                <strong> oportunidades de negocio.</strong> Al ser renovable conforme lo vas pagando, es ideal para mantener{' '}
+                <strong>liquidez constante</strong> y financiar tus operaciones de manera recurrente sin necesidad de solicitar un nuevo
+                crédito cada vez.
+              </p>
+            </div>
+            <div>
+              <div className='mb-4'>
+                <div className='bg-gray-50 rounded-xl  p-8 place-self-start w-full'>
+                  <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
+                  <ul className='space-y-4'>
+                    {getFeatures(clientType === 'personal').map((feature, index) => (
+                      <li key={index} className='flex items-start'>
+                        <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
+                        <span className='text-gray-600'>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              {clientType === 'personal' && (
+                <Alert
+                  color='primary'
+                  title='Necesitas un monto mayor?'
+                  variant='faded'
+                  classNames={{
+                    base: cn([
+                      'bg-white dark:bg-background shadow-sm',
+                      'border-1 border-default-200 dark:border-default-100',
+                      "relative before:content-[''] before:absolute before:z-10",
+                      'before:left-0 before:top-[-1px] before:bottom-[-1px] before:w-1',
+                      'rounded-l-none border-l-0',
+                      'before:bg-primary'
+                    ]),
+                    title: cn('text-primary', 'font-semibold', 'font-montserrat'),
+                    description: cn('text-default-500', 'font-medium'),
+                    iconWrapper: cn('dark:bg-transparent')
+                    // mainWrapper: cn('pt-1', classNames.mainWrapper),
+                  }}
+                >
+                  <div className='flex flex-col md:flex-row items-start gap-1 mt-1'>
+                    <p className='text-sm'>Envíanos un mensaje y te ayudaremos a encontrar una solución a tu medida.</p>
+                    <Button
+                      color='primary'
+                      size='sm'
+                      variant='ghost'
+                      title=''
+                      className='bg-background text-default-700 font-medium border-1 shadow-small'
+                      endContent={<MessageCircleQuestion className='w-5' />}
+                      onClick={handleWhatsAppClick}
+                    >
+                      Enviar mensaje
+                    </Button>
+                  </div>
+                </Alert>
+              )}
+            </div>
+            <div>
+              <div className='bg-white shadow-lg rounded-xl p-8  border border-gray-200'>
+                <div className='md:flex items-center justify-between mb-6'>
+                  <h2 className='mb-4 md:mb-0 text-xl mb:text-2xl font-semibold text-primary '>Requisitos</h2>
+                  <RadioGroup
+                    value={clientType}
+                    onValueChange={(value) => setClientType(value as ClientType)}
+                    orientation='horizontal'
+                    classNames={{
+                      label: 'text-primary font-semibold mb-2'
+                    }}
+                  >
+                    <Radio value='personal'>Persona Física</Radio>
+                    <Radio value='business'>Empresa</Radio>
+                  </RadioGroup>
+                </div>
                 <ul className='space-y-4'>
-                  {getFeatures(clientType === 'personal').map((feature, index) => (
+                  {getRequirements(clientType === 'personal').map((requirement, index) => (
                     <li key={index} className='flex items-start'>
-                      <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
-                      <span className='text-gray-600'>{feature}</span>
+                      <span className='w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0' />
+                      <span className='text-gray-600'>{requirement}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
-
-            {clientType === 'personal' && (
-              <Alert
-                color='primary'
-                title='Necesitas un monto mayor?'
-                variant='faded'
-                classNames={{
-                  base: cn([
-                    'bg-white dark:bg-background shadow-sm',
-                    'border-1 border-default-200 dark:border-default-100',
-                    "relative before:content-[''] before:absolute before:z-10",
-                    'before:left-0 before:top-[-1px] before:bottom-[-1px] before:w-1',
-                    'rounded-l-none border-l-0',
-                    'before:bg-primary'
-                  ]),
-                  title: cn('text-primary', 'font-semibold', 'font-montserrat'),
-                  description: cn('text-default-500', 'font-medium'),
-                  iconWrapper: cn('dark:bg-transparent')
-                  // mainWrapper: cn('pt-1', classNames.mainWrapper),
-                }}
-              >
-                <div className='flex flex-col md:flex-row items-start gap-1 mt-1'>
-                  <p className='text-sm'>Envíanos un mensaje y te ayudaremos a encontrar una solución a tu medida.</p>
-                  <Button
-                    color='primary'
-                    size='sm'
-                    variant='ghost'
-                    title=''
-                    className='bg-background text-default-700 font-medium border-1 shadow-small'
-                    endContent={<MessageCircleQuestion className='w-5' />}
-                    onClick={handleWhatsAppClick}
-                  >
-                    Enviar mensaje
-                  </Button>
-                </div>
-              </Alert>
-            )}
-          </div>
-
-          <div>
-            <div className='bg-white shadow-lg rounded-xl p-8  border border-gray-200'>
-              <div className='md:flex items-center justify-between mb-6'>
-                <h2 className='mb-4 md:mb-0 text-xl mb:text-2xl font-semibold text-primary '>Requisitos</h2>
-                <RadioGroup
-                  value={clientType}
-                  onValueChange={(value) => setClientType(value as ClientType)}
-                  orientation='horizontal'
-                  classNames={{
-                    label: 'text-primary font-semibold mb-2'
-                  }}
-                >
-                  <Radio value='personal'>Persona Física</Radio>
-                  <Radio value='business'>Empresa</Radio>
-                </RadioGroup>
-              </div>
-
-              <ul className='space-y-4'>
-                {getRequirements(clientType === 'personal').map((requirement, index) => (
-                  <li key={index} className='flex items-start'>
-                    <span className='w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0' />
-                    <span className='text-gray-600'>{requirement}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className='order-6 md:order-5'>
+              <RelatedProducts />
             </div>
+            <CallToAction />
           </div>
-
-          <div className='order-6 md:order-5'>
-            <RelatedProducts />
-          </div>
-
-          <CallToAction />
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
