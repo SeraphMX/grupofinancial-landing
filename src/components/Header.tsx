@@ -13,6 +13,12 @@ const Header = () => {
   const location = useLocation()
 
   const scrollToSection = (sectionId: string) => {
+    if (sectionId === 'contact') {
+      console.log('Scroll abajo')
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+      setIsMenuOpen(false)
+      return
+    }
     if (location.pathname !== '/') {
       navigate('/')
       // Esperar a que la navegación se complete antes de hacer scroll
