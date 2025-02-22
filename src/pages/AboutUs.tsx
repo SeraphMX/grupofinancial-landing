@@ -127,7 +127,7 @@ const AboutUs = () => {
               <div className='space-y-6'>
                 <div className='flex items-start space-x-4 bg-white p-6 rounded-lg shadow-sm'>
                   <div className='w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0'>
-                    <span className='text-primary font-semibold'>A</span>
+                    <span className='text-primary font-semibold'></span>
                   </div>
                   <div>
                     <h3 className='text-xl font-semibold text-primary mb-2'>Estas listo para iniciar con nosotros?</h3>

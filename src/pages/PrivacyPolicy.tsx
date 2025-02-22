@@ -1,5 +1,6 @@
 import { Shield } from 'lucide-react'
 import HelmetSEO from '../components/HelmetSEO'
+import { companyInfo } from '../lib/data/companyInfo'
 
 const PrivacyPolicy = () => {
   const schemaData = {
@@ -71,8 +72,8 @@ const PrivacyPolicy = () => {
                 </li>
                 <li>
                   Teléfono:{' '}
-                  <a className='text-primary font-semibold' href='tel:+525512345678'>
-                    55 1234 5678
+                  <a className='text-primary font-semibold' href={`tel:${companyInfo.phone}`}>
+                    {companyInfo.phone}
                   </a>
                 </li>
                 <li>
@@ -121,9 +122,7 @@ const PrivacyPolicy = () => {
                 <li>Datos patrimoniales y financieros</li>
                 <li>Datos laborales y académicos</li>
                 <li>Datos migratorios</li>
-                <li>
-                  Datos biométricos <sup>1</sup>
-                </li>
+                <li>Datos biométricos</li>
               </ul>
             </section>
             <section className='mb-12'>

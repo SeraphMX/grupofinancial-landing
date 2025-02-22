@@ -1,5 +1,6 @@
 import { FileText } from 'lucide-react'
 import HelmetSEO from '../components/HelmetSEO'
+import { companyInfo } from '../lib/data/companyInfo'
 
 const Terms = () => {
   const schemaData = {
@@ -88,7 +89,15 @@ const Terms = () => {
             <section>
               <h2 className='text-2xl font-bold text-primary mb-4'>6. Contacto</h2>
               <p className='text-gray-600'>
-                Si tienes preguntas sobre estos términos, contáctanos en legal@financeflow.mx o llama al (555) 123-4567.
+                Si tienes preguntas sobre estos términos, contáctanos en{' '}
+                <a href={`mailto:${companyInfo.email}`} className='text-primary'>
+                  {companyInfo.email}
+                </a>{' '}
+                o llama al{' '}
+                <a href={`tel:${companyInfo.phone}`} className='text-primary'>
+                  {companyInfo.phone}
+                </a>
+                .
               </p>
             </section>
           </div>

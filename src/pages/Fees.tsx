@@ -54,22 +54,34 @@ const Fees = () => {
                   <div>
                     <h4 className='font-semibold text-gray-700'>Crédito Simple</h4>
                     <ul className='list-disc pl-6 text-gray-600'>
-                      <li>Sin garantía: desde 24% hasta 36% anual</li>
-                      <li>Con garantía hipotecaria: desde 12% hasta 18% anual</li>
+                      <li>
+                        Sin garantía: <strong>desde 24% hasta 36% anual</strong>
+                      </li>
+                      <li>
+                        Con garantía hipotecaria: <strong>desde 18% hasta 33% anual</strong>
+                      </li>
                     </ul>
                   </div>
                   <div>
                     <h4 className='font-semibold text-gray-700'>Crédito Revolvente</h4>
                     <ul className='list-disc pl-6 text-gray-600'>
-                      <li>Tasa base: desde 18% hasta 30% anual</li>
-                      <li>Tasa preferencial para clientes recurrentes: desde 15% anual</li>
+                      <li>
+                        Tasa base: <strong>desde 18% hasta 33% anual</strong>
+                      </li>
+                      <li>
+                        Tasa preferencial para clientes recurrentes: <strong>desde 16% anual</strong>
+                      </li>
                     </ul>
                   </div>
                   <div>
                     <h4 className='font-semibold text-gray-700'>Arrendamiento</h4>
                     <ul className='list-disc pl-6 text-gray-600'>
-                      <li>Tasa fija: desde 16% hasta 24% anual</li>
-                      <li>Opción a compra: 1% del valor original</li>
+                      <li>
+                        Tasa fija: <strong>desde 18% hasta 30% anual</strong>
+                      </li>
+                      <li>
+                        Opción a compra: <strong>desde 1% del valor original</strong>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -81,7 +93,7 @@ const Fees = () => {
                 En nuestros servicios, <strong>solo generamos un tipo de comisión por cada operación autorizada.</strong> Esta comisión se
                 define únicamente después de que tu trámite haya sido aprobado y autorizado. Nuestro compromiso es ofrecerte transparencia
                 total, para que sepas exactamente cuánto pagarás una vez que tu solicitud haya sido autorizada. Las comisiones se calculan
-                sobre el monto total del crédito o la línea de financiamiento autorizada de acuerdo a las siguientes tarifas:
+                sobre el monto total del crédito o la línea de financiamiento de acuerdo a las siguientes tarifas:
               </p>
               <div className='bg-gray-50 p-6 rounded-lg'>
                 <div className='space-y-6'>
@@ -89,7 +101,7 @@ const Fees = () => {
                     <h4 className='font-semibold text-gray-700 mb-2'>Comisión por Apertura</h4>
                     <ul className='list-disc pl-6 text-gray-600 mb-4'>
                       <li>
-                        <strong>Crédito Simple</strong> a 6% sobre el monto autorizado
+                        <strong>Crédito Simple</strong>: 4% a 6% sobre el monto autorizado
                       </li>
                       <li>
                         <strong>Crédito Revolvente</strong>: 4% a 6% sobre la línea autorizada
@@ -116,10 +128,18 @@ const Fees = () => {
               <p className='text-gray-600'>El CAT varía según el producto y las condiciones específicas de cada crédito:</p>
               <div className='bg-gray-50 p-6 rounded-lg mt-4'>
                 <ul className='list-disc pl-6 text-gray-600'>
-                  <li>Crédito Simple sin garantía: CAT promedio 32% sin IVA</li>
-                  <li>Crédito Simple con garantía: CAT promedio 20% sin IVA</li>
-                  <li>Crédito Revolvente: CAT promedio 28% sin IVA</li>
-                  <li>Arrendamiento: CAT promedio 25% sin IVA</li>
+                  <li>
+                    <strong>Crédito Simple sin garantía</strong>: CAT promedio 30% sin IVA
+                  </li>
+                  <li>
+                    <strong>Crédito Simple con garantía</strong>: CAT promedio 25% sin IVA
+                  </li>
+                  <li>
+                    <strong>Crédito Revolvente</strong>: CAT promedio 28% sin IVA
+                  </li>
+                  <li>
+                    <strong>Arrendamiento</strong>: CAT promedio 25% sin IVA
+                  </li>
                 </ul>
                 <p className='text-sm text-gray-500 mt-4'>
                   *CAT: El Costo Anual Total de financiamiento expresado en términos porcentuales anuales que, para fines informativos y de
