@@ -7,6 +7,7 @@ import { GuaranteeRequirements } from '../components/GuaranteeRequirements'
 import HelmetSEO from '../components/HelmetSEO'
 import CallToAction from '../components/products/CallToAction'
 import RelatedProducts from '../components/RelatedProducts'
+import { companyInfo } from '../lib/data/companyInfo'
 import { ClientType, setCreditType } from '../store/creditSlice'
 
 const CreditoRevolvente = () => {
@@ -15,12 +16,21 @@ const CreditoRevolvente = () => {
 
   const [clientType, setClientType] = useState<ClientType>('personal')
 
+  const getBenefits = () => {
+    const commonBenefits = [
+      'Mejora tu liquidez con acceso a capital cuando lo necesites',
+      'Adapta el financiamiento a tus necesidades',
+      'Evita trámites innecesarios con renovaciones ágiles'
+    ]
+    return commonBenefits
+  }
+
   const getFeatures = (isPersonal: boolean) => {
     const commonFeatures = [
       'Plazos desde 12 hasta 36 meses',
+      'Disponibilidad inmediata una vez aprobado',
       'Tasa preferencial para clientes frecuentes',
       'Pagos flexibles',
-      'Aprobación en 72 horas',
       'Disposiciones parciales según tus necesidades',
       <>
         Sin costo por saldo no usado
@@ -72,10 +82,21 @@ const CreditoRevolvente = () => {
       </>
     ]
 
-    if (!isPersonal) {
-      return ['Montos desde $500,000 hasta $50,000,000 MXN', ...commonFeatures, 'Mayor monto de financiamiento']
+    if (isPersonal) {
+      return [
+        ...commonFeatures,
+        <>
+          Montos desde <strong>$100,000</strong> hasta <strong>$10,000,000</strong> MXN
+        </>
+      ]
     }
-    return ['Montos desde $100,000 hasta $10,000,000 MXN', ...commonFeatures]
+    return [
+      'Mayor monto de financiamiento',
+      ...commonFeatures,
+      <>
+        Montos desde <strong>$500,000</strong> hasta <strong>$50,000,000</strong> MXN
+      </>
+    ]
   }
 
   const getRequirements = (isPersonal: boolean) => {
@@ -149,8 +170,8 @@ const CreditoRevolvente = () => {
 
   // Función para abrir WhatsApp en una nueva pestaña
   const handleWhatsAppClick = () => {
-    const phoneNumber = '521234567890'
-    const message = encodeURIComponent('Hola, busco un crédito revolvente mayor a 10 millones.')
+    const phoneNumber = companyInfo.whatsapp
+    const message = encodeURIComponent('Hola, busco un crédito revolvente personal mayor a 10 millones.')
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`
 
     window.open(whatsappUrl, '_blank')
@@ -222,15 +243,28 @@ const CreditoRevolvente = () => {
             <div>
               <div className='mb-4'>
                 <div className='bg-gray-50 rounded-xl  p-8 place-self-start w-full'>
-                  <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
-                  <ul className='space-y-4'>
-                    {getFeatures(clientType === 'personal').map((feature, index) => (
-                      <li key={index} className='flex items-start'>
-                        <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
-                        <span className='text-gray-600'>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div>
+                    <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Beneficios</h2>
+                    <ul className='space-y-4'>
+                      {getBenefits().map((benefit, index) => (
+                        <li key={index} className='flex items-start'>
+                          <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
+                          <span className='text-gray-600'>{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className='mt-6'>
+                    <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
+                    <ul className='space-y-4'>
+                      {getFeatures(clientType === 'personal').map((feature, index) => (
+                        <li key={index} className='flex items-start'>
+                          <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
+                          <span className='text-gray-600'>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
               {clientType === 'personal' && (

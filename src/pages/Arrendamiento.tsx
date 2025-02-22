@@ -3,7 +3,6 @@ import { Check } from 'lucide-react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import BackButton from '../components/BackButton'
-import { GuaranteeRequirements } from '../components/GuaranteeRequirements'
 import HelmetSEO from '../components/HelmetSEO'
 import CallToAction from '../components/products/CallToAction'
 import RelatedProducts from '../components/RelatedProducts'
@@ -112,17 +111,17 @@ const Arrendamiento = () => {
           Montos desde <strong>$500,000</strong> hasta <strong>$10,000,000</strong> MXN
         </>,
         <>
-          Tasa desde el <strong>3%</strong> anual
+          Tasa desde el <strong>3%</strong> mensual
         </>
       ]
     }
     return [
       ...commonFeatures,
       <>
-        Montos desde <strong>$500,000</strong> hasta <strong>$20,000,000</strong> MXN
+        Montos desde <strong>$500,000</strong> hasta <strong>$50,000,000</strong> MXN
       </>,
       <>
-        Tasa desde el <strong>2.5%</strong> anual
+        Tasa desde el <strong>2.5%</strong> mensual
       </>,
       'Mayor monto de financiamiento'
     ]
@@ -132,7 +131,6 @@ const Arrendamiento = () => {
     const commonBenefits = [
       'No impacta tus estados financieros',
       'Programación presupuestal eficiente',
-      'Conserva líneas de crédito',
       'Deducible de impuestos',
       'Minimiza los riesgos de obsolescencia'
     ]
@@ -157,8 +155,8 @@ const Arrendamiento = () => {
               <div className='text-lg font-bold'>¿Por qué es necesario?</div>
               <div className='text-small'>
                 El reporte de historial crediticio es un requisito para cualquier trámite, ya que nos permite conocer tu perfil financiero.
-                Sin embargo, en créditos con garantía, no es un factor determinante para la aprobación. Aunque tu historial tenga algunas
-                irregularidades, aún puedes calificar, ya que la garantía respalda el crédito.
+                Sin embargo, en arrendamiento, <strong>no es un factor determinante</strong> para la aprobación. Aunque tu historial tenga
+                algunas irregularidades, aún puedes calificar, ya que <strong>la garantía es el activo</strong> que respalda el crédito.
               </div>
             </div>
           </PopoverContent>
@@ -184,9 +182,47 @@ const Arrendamiento = () => {
           </PopoverContent>
         </Popover>
       </>,
+      <>
+        Facturas
+        <Popover showArrow>
+          <PopoverTrigger>
+            <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
+              <span className='font-bold text-lg'>?</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className='px-1 py-2 max-w-[300px]'>
+              <div className='text-lg font-bold'>¿Por qué es necesario?</div>
+              <div className='text-small'>
+                Si el tipo de bien a adquirir es un vehículo, maquinaria o equipo, necesitamos las facturas de compra para verificar la
+                propiedad y el valor del activo. En caso de no contar con ellas, podemos ayudarte a gestionar la documentación necesaria.
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </>,
+      <>
+        Opinión de valor
+        <Popover showArrow>
+          <PopoverTrigger>
+            <Button radius='full' size='sm' isIconOnly className='ml-1' variant='ghost' color='secondary'>
+              <span className='font-bold text-lg'>?</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className='px-1 py-2 max-w-[300px]'>
+              <div className='text-lg font-bold'>¿Por qué es necesario?</div>
+              <div className='text-small'>
+                Una opinión de valor es un análisis profesional que estima el valor de un bien de forma rápida y práctica, basándose en
+                información de mercado y características generales. Este documento es necesario{' '}
+                <strong>solo si el activo no es nuevo</strong> y nos ayuda a determinar su valor y establecer el monto del financiamiento.
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </>,
       'Declaraciones anuales (últimos 2 ejercicios)',
-      'Estados financieros (últimos 2 ejercicios)',
-      ...GuaranteeRequirements
+      'Estados financieros (últimos 2 ejercicios)'
     ]
 
     if (isPersonal) {
@@ -202,8 +238,6 @@ const Arrendamiento = () => {
       'Acta constitutiva',
       ...basicRequirements,
       'Declaracion mensual mas reciente',
-      'Declaraciones anuales (últimos 2 ejercicios)',
-      'Estados financieros (últimos 2 ejercicios)',
       'Identificación oficial del representante legal',
       'Constancia Situación fiscal del representante legal ',
       'Comprobante de domicilio del representante legal'
@@ -276,17 +310,6 @@ const Arrendamiento = () => {
               </p>
             </div>
             <div className='bg-gray-50 rounded-xl  p-8 place-self-start w-full'>
-              <div className='mb-6'>
-                <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
-                <ul className='space-y-4'>
-                  {getFeatures(clientType === 'personal').map((feature, index) => (
-                    <li key={index} className='flex items-start'>
-                      <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
-                      <span className='text-gray-600'>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
               <div>
                 <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Beneficios</h2>
                 <ul className='space-y-4'>
@@ -294,6 +317,17 @@ const Arrendamiento = () => {
                     <li key={index} className='flex items-start'>
                       <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
                       <span className='text-gray-600'>{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className='mt-6'>
+                <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
+                <ul className='space-y-4'>
+                  {getFeatures(clientType === 'personal').map((feature, index) => (
+                    <li key={index} className='flex items-start'>
+                      <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
+                      <span className='text-gray-600'>{feature}</span>
                     </li>
                   ))}
                 </ul>

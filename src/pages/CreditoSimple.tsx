@@ -15,28 +15,42 @@ const CreditoSimple = () => {
   const [selectedTab, setSelectedTab] = useState('sin-garantia')
   const [clientType, setClientType] = useState<ClientType>('personal')
 
+  const getBenefits = (withGuarantee: boolean) => {
+    const commonBenefits = [
+      'Mejora tu liquidez sin comprometer activos',
+      'Flexibilidad para utilizar el capital según tus necesidades',
+      'Asesoría personalizada en todo el proceso'
+    ]
+
+    if (withGuarantee) {
+      return [...commonBenefits, 'Mayor monto de financiamiento', 'Mejores condiciones crediticias']
+    }
+
+    return [...commonBenefits, 'Documentación mínima requerida']
+  }
+
   const getFeatures = (withGuarantee: boolean) => {
     if (withGuarantee) {
       return [
-        'Montos desde $500,000 hasta $50,000,000 MXN',
         'Plazos desde 12 hasta 120 meses',
         'Tasa de interés preferencial',
         'Pagos fijos mensuales',
         'Aprobación en 72 horas',
         'Sin penalización por pago anticipado',
-        'Mayor monto de financiamiento',
-        'Mejores condiciones crediticias'
+        <>
+          Montos desde <strong>$500,000</strong> hasta <strong>$50,000,000</strong> MXN
+        </>
       ]
     }
     return [
-      'Montos desde $100,000 hasta $5,000,000 MXN',
       'Plazos desde 12 hasta 60 meses',
       'Tasa de interés preferencial',
       'Pagos fijos mensuales',
       'Aprobación en 72 horas',
       'Sin penalización por pago anticipado',
-      'Documentación mínima requerida',
-      'Asesoría personalizada'
+      <>
+        Montos desde <strong>$100,000</strong> hasta <strong>$5,000,000</strong> MXN
+      </>
     ]
   }
 
@@ -173,15 +187,28 @@ const CreditoSimple = () => {
               </p>
             </div>
             <div className='bg-gray-50 rounded-xl  p-8 place-self-start w-full'>
-              <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
-              <ul className='space-y-4'>
-                {getFeatures(selectedTab === 'con-garantia').map((feature, index) => (
-                  <li key={index} className='flex items-start'>
-                    <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
-                    <span className='text-gray-600'>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+              <div>
+                <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Beneficios</h2>
+                <ul className='space-y-4'>
+                  {getBenefits(selectedTab === 'con-garantia').map((benefit, index) => (
+                    <li key={index} className='flex items-start'>
+                      <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
+                      <span className='text-gray-600'>{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className='mt-6'>
+                <h2 className='text-xl mb:text-2xl font-semibold text-primary mb-6'>Características Principales</h2>
+                <ul className='space-y-4'>
+                  {getFeatures(selectedTab === 'con-garantia').map((feature, index) => (
+                    <li key={index} className='flex items-start'>
+                      <Check className='h-5 w-5 text-secondary mt-1 mr-3 flex-shrink-0' />
+                      <span className='text-gray-600'>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
             <div>
               <div className='bg-white shadow-lg rounded-xl p-8  border border-gray-200'>
