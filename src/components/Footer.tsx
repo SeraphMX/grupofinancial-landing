@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/branding/logo-full-white.svg'
+import { companyInfo } from '../lib/data/companyInfo'
 
 const Footer = () => {
   const { scrollYProgress } = useScroll()
@@ -65,8 +66,8 @@ const Footer = () => {
             <ul className='space-y-2'>
               <li className='flex items-center'>
                 <Phone className='h-5 w-5 mr-2' />
-                <a href='tel:555555555' className='text-gray-300'>
-                  +52 (555) 123-4567
+                <a href={`tel:${companyInfo.phone}`} className='text-gray-300'>
+                  {companyInfo.phone}
                 </a>
               </li>
               <li className='flex items-center'>
