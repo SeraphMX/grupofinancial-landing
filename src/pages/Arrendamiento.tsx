@@ -10,9 +10,12 @@ import { type ClientType, setClientType, setCreditType } from '../store/creditSl
 
 const Arrendamiento = () => {
   const dispatch = useDispatch()
-  dispatch(setCreditType('arrendamiento'))
 
   const [clientType, setPageClientType] = useState<ClientType>('personal')
+
+  useEffect(() => {
+    dispatch(setCreditType('arrendamiento'))
+  }, [dispatch])
 
   useEffect(() => {
     console.log('cambiar el tipo de cliente')

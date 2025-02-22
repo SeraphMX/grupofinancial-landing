@@ -11,9 +11,12 @@ import { setClientType, setCreditType, type ClientType } from '../store/creditSl
 
 const CreditoSimple = () => {
   const dispatch = useDispatch()
-  dispatch(setCreditType('simple'))
   const [selectedTab, setSelectedTab] = useState('sin-garantia')
   const [clientType, setPageClientType] = useState<ClientType>('personal')
+
+  useEffect(() => {
+    dispatch(setCreditType('simple'))
+  }, [dispatch])
 
   useEffect(() => {
     console.log('cambiar el tipo de cliente')

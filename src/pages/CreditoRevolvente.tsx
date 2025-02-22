@@ -12,9 +12,12 @@ import { type ClientType, setClientType, setCreditType } from '../store/creditSl
 
 const CreditoRevolvente = () => {
   const dispatch = useDispatch()
-  dispatch(setCreditType('revolvente'))
 
   const [clientType, setPageClientType] = useState<ClientType>('personal')
+
+  useEffect(() => {
+    dispatch(setCreditType('revolvente'))
+  }, [dispatch])
 
   useEffect(() => {
     console.log('cambiar el tipo de cliente')
