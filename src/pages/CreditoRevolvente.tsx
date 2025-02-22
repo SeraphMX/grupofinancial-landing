@@ -1,6 +1,6 @@
 import { Alert, Button, cn, Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup } from '@nextui-org/react'
 import { Check, MessageCircleQuestion } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import BackButton from '../components/BackButton'
 import { GuaranteeRequirements } from '../components/GuaranteeRequirements'
@@ -8,13 +8,18 @@ import HelmetSEO from '../components/HelmetSEO'
 import CallToAction from '../components/products/CallToAction'
 import RelatedProducts from '../components/RelatedProducts'
 import { companyInfo } from '../lib/data/companyInfo'
-import { ClientType, setCreditType } from '../store/creditSlice'
+import { type ClientType, setClientType, setCreditType } from '../store/creditSlice'
 
 const CreditoRevolvente = () => {
   const dispatch = useDispatch()
   dispatch(setCreditType('revolvente'))
 
-  const [clientType, setClientType] = useState<ClientType>('personal')
+  const [clientType, setPageClientType] = useState<ClientType>('personal')
+
+  useEffect(() => {
+    console.log('cambiar el tipo de cliente')
+    dispatch(setClientType(clientType))
+  }, [clientType, dispatch])
 
   const getBenefits = () => {
     const commonBenefits = [
@@ -310,7 +315,7 @@ const CreditoRevolvente = () => {
                   <h2 className='mb-4 md:mb-0 text-xl mb:text-2xl font-semibold text-primary '>Requisitos</h2>
                   <RadioGroup
                     value={clientType}
-                    onValueChange={(value) => setClientType(value as ClientType)}
+                    onValueChange={(value) => setPageClientType(value as ClientType)}
                     orientation='horizontal'
                     classNames={{
                       label: 'text-primary font-semibold mb-2'

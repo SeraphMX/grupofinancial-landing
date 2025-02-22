@@ -1,18 +1,23 @@
 import { Button, Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup } from '@nextui-org/react'
 import { Check } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import BackButton from '../components/BackButton'
 import HelmetSEO from '../components/HelmetSEO'
 import CallToAction from '../components/products/CallToAction'
 import RelatedProducts from '../components/RelatedProducts'
-import { ClientType, setCreditType } from '../store/creditSlice'
+import { type ClientType, setClientType, setCreditType } from '../store/creditSlice'
 
 const Arrendamiento = () => {
   const dispatch = useDispatch()
   dispatch(setCreditType('arrendamiento'))
 
-  const [clientType, setClientType] = useState<ClientType>('personal')
+  const [clientType, setPageClientType] = useState<ClientType>('personal')
+
+  useEffect(() => {
+    console.log('cambiar el tipo de cliente')
+    dispatch(setClientType(clientType))
+  }, [clientType, dispatch])
 
   const getFeatures = (isPersonal: boolean) => {
     const commonFeatures = [
@@ -339,7 +344,7 @@ const Arrendamiento = () => {
                   <h2 className='mb-4 md:mb-0 text-xl mb:text-2xl font-semibold text-primary '>Requisitos</h2>
                   <RadioGroup
                     value={clientType}
-                    onValueChange={(value) => setClientType(value as ClientType)}
+                    onValueChange={(value) => setPageClientType(value as ClientType)}
                     orientation='horizontal'
                     classNames={{
                       label: 'text-primary font-semibold mb-2'
