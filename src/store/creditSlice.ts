@@ -81,7 +81,13 @@ export const creditSlice = createSlice({
     setClientType: (state, action: PayloadAction<ClientType>) => {
       state.clientType = action.payload
       state.step = 2
-      state.amount = action.payload === 'personal' ? 100000 : 500000
+
+      if (state.creditType === 'arrendamiento') {
+        state.amount = 500000
+      } else {
+        state.amount = action.payload === 'personal' ? 100000 : 500000
+      }
+
       const payments = calculatePayments(state.amount, state.term, state.interestRate)
       state.monthlyPayment = payments.monthlyPayment
       state.totalPayment = payments.totalPayment

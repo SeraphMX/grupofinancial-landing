@@ -17,7 +17,7 @@ const Arrendamiento = () => {
 
   const getAmountLimits = () => {
     if (clientType === 'personal') {
-      return { min: 100000, max: 10000000, step: 50000 }
+      return { min: 500000, max: 10000000, step: 50000 }
     }
     return { min: 500000, max: 50000000, step: 50000 }
   }
