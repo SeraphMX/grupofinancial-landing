@@ -1,6 +1,7 @@
 import { MessageCircle as WhatsappIcon } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
+import { companyInfo } from '../../lib/data/companyInfo'
 import { formatCurrency } from '../../lib/utils/currency'
 import { resetForm } from '../../store/creditSlice'
 import { RootState } from '../../store/store'
@@ -14,14 +15,14 @@ const RequestDetails = () => {
 
   const getWhatsappLink = () => {
     const message = encodeURIComponent(
-      `¡Hola! He realizado la solicitud en lina para un crédito ${clientType === 'personal' ? 'personal' : 'empresarial'} ${
-        guaranteeType === 'con-garantia' ? 'con garantía hipotecaria ' : ''
+      `¡Hola! He realizado la solicitud en línea para un crédito ${clientType === 'personal' ? 'personal' : 'empresarial'} ${
+        guaranteeType === 'con-garantia' ? 'con garantía hipotecaria ' : 'sin garantía'
       }con las siguientes características:\n\n` +
         `Monto: ${formatCurrency(amount)}\n` +
         `Plazo: ${term} meses\n` +
         `Mi nombre es ${clientData.name} y quisiera más información.`
     )
-    return `https://wa.me/525551234567?text=${message}`
+    return `https://wa.me/52${companyInfo.phone}?text=${message}`
   }
 
   return (
