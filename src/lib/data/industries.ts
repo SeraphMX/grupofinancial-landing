@@ -22,4 +22,4 @@ export const industries = [
   'Telecomunicaciones',
   'Textil y Moda',
   'Otro'
-];
+]

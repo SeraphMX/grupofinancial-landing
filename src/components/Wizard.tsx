@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { products } from '../lib/data/products'
 import { sendOTP } from '../lib/utils/phone'
-import { createSolicitud } from '../services/solicitudes'
+import { createSolicitud, SolicitudData } from '../services/solicitudes'
 import {
   nextStep,
   prevStep,
@@ -33,15 +33,7 @@ interface CreditWizardProps {
   pCreditType?: CreditType
 }
 
-interface ClientData {
-  name: string
-  email: string
-  phone: string
-  rfc: string
-  companyName?: string
-  industry?: string
-  annualRevenue?: string
-}
+
 
 interface OTPResult {
   success: boolean
@@ -83,7 +75,7 @@ const CreditWizard: FC<CreditWizardProps> = ({ pCreditType }) => {
     //dispatch(setCreditType('simple'))
   }, [dispatch, location.state, creditType])
 
-  const handleClientDataSubmit = async (data: ClientData) => {
+  const handleClientDataSubmit = async (data: SolicitudData) => {
     dispatch(setClientData(data))
 
     try {
@@ -109,7 +101,7 @@ const CreditWizard: FC<CreditWizardProps> = ({ pCreditType }) => {
       await createSolicitud({
         tipo_credito: 'simple',
         tipo_cliente: clientType!,
-        tipo_garantia: guaranteeType,
+        credit_destination: clientData.,
         monto: amount,
         plazo: term,
         pago_mensual: monthlyPayment,
@@ -117,6 +109,7 @@ const CreditWizard: FC<CreditWizardProps> = ({ pCreditType }) => {
         email: clientData.email,
         telefono: clientData.phone,
         rfc: clientData.rfc,
+        credit_destination: clientData.,
         nombre_empresa: clientData.companyName,
         industria: clientData.industry,
         ingresos_anuales: clientData.annualRevenue
