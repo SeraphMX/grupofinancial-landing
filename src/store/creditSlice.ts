@@ -1,24 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type ClientType = 'personal' | 'business'
-export type GuaranteeType = 'sin-garantia' | 'con-garantia'
+export type CreditConditions = 'sin-garantia' | 'con-garantia' | 'puro' | 'S&LB' | null
 export type CreditType = 'simple' | 'revolvente' | 'arrendamiento'
 
-interface ClientData {
+export interface ClientData {
   name: string
   email: string
   phone: string
   rfc: string
-  companyName?: string
-  industry?: string
-  annualRevenue?: string
+  companyName?: string | null
+  industry?: string | null
+  annualRevenue?: string | null
 }
 
 interface CreditState {
   step: number
   creditType: CreditType
   clientType: ClientType | null
-  guaranteeType: GuaranteeType
+  creditConditions: CreditConditions
   amount: number
   term: number
   monthlyPayment: number
@@ -48,7 +48,7 @@ const initialState: CreditState = {
   step: 1,
   creditType: 'simple',
   clientType: null,
-  guaranteeType: 'sin-garantia',
+  creditConditions: 'sin-garantia',
   amount: 100000,
   term: 12,
   monthlyPayment: 0,
@@ -59,9 +59,9 @@ const initialState: CreditState = {
     email: '',
     phone: '',
     rfc: '',
-    companyName: '',
-    industry: '',
-    annualRevenue: ''
+    companyName: null,
+    industry: null,
+    annualRevenue: null
   },
   isOTPVerified: false
 }
@@ -76,6 +76,10 @@ export const creditSlice = createSlice({
   initialState,
   reducers: {
     setCreditType: (state, action: PayloadAction<CreditType>) => {
+      if (action.payload === 'revolvente') {
+        state.creditConditions = null
+      }
+
       state.creditType = action.payload
     },
     setClientType: (state, action: PayloadAction<ClientType>) => {
@@ -92,8 +96,8 @@ export const creditSlice = createSlice({
       state.monthlyPayment = payments.monthlyPayment
       state.totalPayment = payments.totalPayment
     },
-    setGuaranteeType: (state, action: PayloadAction<GuaranteeType>) => {
-      state.guaranteeType = action.payload
+    setCreditConditions: (state, action: PayloadAction<CreditConditions>) => {
+      state.creditConditions = action.payload
       // Ajustar el monto si es necesario
       if (action.payload === 'con-garantia' && state.amount < 500000) {
         state.amount = 500000
@@ -159,7 +163,7 @@ export const creditSlice = createSlice({
 export const {
   setCreditType,
   setClientType,
-  setGuaranteeType,
+  setCreditConditions,
   setAmount,
   setTerm,
   setClientData,
