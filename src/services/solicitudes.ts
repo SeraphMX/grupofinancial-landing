@@ -1,23 +1,20 @@
 import { supabase } from '../lib/supabase'
-import type { ClientType, CreditType } from '../store/creditSlice'
+import type { ClientType, CreditConditions, CreditType } from '../store/creditSlice'
 
 export interface SolicitudData {
   tipo_credito: CreditType
   tipo_cliente: ClientType
-  credit_conditions: string
+  credit_conditions: CreditConditions
   monto: number
   plazo: number
-  pago_mensual: number
   nombre: string
   email: string
   telefono: string
   rfc: string
-  credit_destination?: string
-  clave_ciec?: string
-  nombre_empresa?: string
-  industria?: string
-  ingresos_anuales?: string
-  referrer?: string
+  nombre_empresa?: string | null
+  industria?: string | null
+  ingresos_anuales?: string | null
+  referrer: string | null
 }
 
 export const createSolicitud = async (data: SolicitudData) => {
