@@ -5,15 +5,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { products } from '../lib/data/products'
 import { sendOTP } from '../lib/utils/phone'
-import { createSolicitud, SolicitudData } from '../services/solicitudes'
+import { createSolicitud } from '../services/solicitudes'
 import {
   nextStep,
   prevStep,
   resetForm,
   resetSteps,
   setClientData,
+  setCreditConditions,
   setCreditType,
-  setGuaranteeType,
   setOTPVerified
 } from '../store/creditSlice'
 import type { RootState } from '../store/store'
@@ -26,14 +26,12 @@ import CreditoSimple from './simulator/products/CreditoSimple'
 import ProfileSelect from './simulator/ProfileSelect'
 import RequestDetails from './simulator/RequestDetails'
 
-import type { CreditType } from '../store/creditSlice'
+import type { ClientData, CreditType } from '../store/creditSlice'
 import BackButton from './BackButton'
 
 interface CreditWizardProps {
   pCreditType?: CreditType
 }
-
-
 
 interface OTPResult {
   success: boolean
@@ -45,9 +43,7 @@ const CreditWizard: FC<CreditWizardProps> = ({ pCreditType }) => {
   if (pCreditType) dispatch(setCreditType(pCreditType))
 
   const location = useLocation()
-  const { step, clientType, amount, term, monthlyPayment, clientData, guaranteeType, creditType } = useSelector(
-    (state: RootState) => state.credit
-  )
+  const { step, clientType, amount, term, clientData, creditType, creditConditions } = useSelector((state: RootState) => state.credit)
 
   const [otpError, setOtpError] = useState<string | null>(null)
 
@@ -55,10 +51,6 @@ const CreditWizard: FC<CreditWizardProps> = ({ pCreditType }) => {
   const [Icon, setIcon] = useState<LucideIcon | null>(null)
 
   useEffect(() => {
-    console.log(creditType)
-    console.log(products)
-    console.log(products.find((product: { id: string }) => product.id === creditType)?.title)
-
     const { title: productTitle, icon: productIcon } = products.find(({ id }) => id === creditType) || {}
 
     setTitle(productTitle || '')
@@ -70,14 +62,13 @@ const CreditWizard: FC<CreditWizardProps> = ({ pCreditType }) => {
       dispatch(resetSteps())
     }
     if (location.state?.withGuarantee) {
-      dispatch(setGuaranteeType('con-garantia'))
+      dispatch(setCreditConditions('con-garantia'))
     }
     //dispatch(setCreditType('simple'))
   }, [dispatch, location.state, creditType])
 
-  const handleClientDataSubmit = async (data: SolicitudData) => {
+  const handleClientDataSubmit = async (data: ClientData) => {
     dispatch(setClientData(data))
-
     try {
       const result: OTPResult = await sendOTP(data.phone)
       if (result.success) {
@@ -99,20 +90,19 @@ const CreditWizard: FC<CreditWizardProps> = ({ pCreditType }) => {
     dispatch(setOTPVerified(true))
     try {
       await createSolicitud({
-        tipo_credito: 'simple',
+        tipo_credito: creditType,
         tipo_cliente: clientType!,
-        credit_destination: clientData.,
+        credit_conditions: creditConditions,
         monto: amount,
         plazo: term,
-        pago_mensual: monthlyPayment,
         nombre: clientData.name,
         email: clientData.email,
         telefono: clientData.phone,
         rfc: clientData.rfc,
-        credit_destination: clientData.,
         nombre_empresa: clientData.companyName,
-        industria: clientData.industry,
-        ingresos_anuales: clientData.annualRevenue
+        industria: clientData.industry ?? null,
+        ingresos_anuales: clientData.annualRevenue ?? null,
+        referrer: null //TODO:Check referrer
       })
       dispatch(nextStep())
     } catch (error) {
@@ -126,7 +116,7 @@ const CreditWizard: FC<CreditWizardProps> = ({ pCreditType }) => {
     arrendamiento: Arrendamiento
   }
 
-  const CreditComponent = CreditComponents[creditType] || CreditoSimple
+  const CreditComponent = creditType ? CreditComponents[creditType] : CreditoSimple
 
   const renderStep = () => {
     switch (step) {
