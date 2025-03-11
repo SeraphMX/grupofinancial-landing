@@ -1,6 +1,6 @@
 import { MessageCircle as WhatsappIcon } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { companyInfo } from '../../lib/data/companyInfo'
 import { formatCurrency } from '../../lib/utils/currency'
 import { resetForm } from '../../store/creditSlice'
@@ -8,21 +8,21 @@ import { RootState } from '../../store/store'
 
 const RequestDetails = () => {
   const dispatch = useDispatch()
-  const location = useLocation()
-  const { step, clientType, amount, term, monthlyPayment, totalPayment, clientData, guaranteeType, isOTPVerified } = useSelector(
+  const { clientType, amount, term, monthlyPayment, clientData, creditConditions, creditType } = useSelector(
     (state: RootState) => state.credit
   )
 
   const getWhatsappLink = () => {
     const message = encodeURIComponent(
-      `¡Hola! He realizado la solicitud en línea para un crédito ${clientType === 'personal' ? 'personal' : 'empresarial'} ${
-        guaranteeType === 'con-garantia' ? 'con garantía hipotecaria ' : 'sin garantía'
-      }con las siguientes características:\n\n` +
+      `¡Hola! Mi nombre es ${clientData.name}, he realizado la solicitud en línea para un crédito ${
+        creditType.slice(0, 1).toUpperCase() + creditType.slice(1)
+      } ${creditConditions ? creditConditions.replace('-', ' ') : ''} ${
+        clientType === 'personal' ? 'personal' : 'empresarial'
+      } con las siguientes características:\n\n` +
         `Monto: ${formatCurrency(amount)}\n` +
-        `Plazo: ${term} meses\n` +
-        `Mi nombre es ${clientData.name} y quisiera más información.`
+        `Plazo: ${term} meses\n`
     )
-    return `https://wa.me/52${companyInfo.phone}?text=${message}`
+    return `https://wa.me/+52${companyInfo.phone}?text=${message}`
   }
 
   return (
@@ -32,14 +32,17 @@ const RequestDetails = () => {
       </div>
 
       <div className='bg-white p-6 rounded-xl shadow-lg space-y-6'>
-        <p className='text-gray-600 mb-4'>Hemos recibido tu información y un asesor se pondrá en contacto contigo pronto.</p>
+        <p className='text-gray-600 mb-4'>
+          Hemos recibido tu información y uno de nuestros asesores se pondrá en contacto contigo lo más pronto posible, en menos de 24
+          horas.
+        </p>
         <h3 className='text-xl font-semibold text-primary mb-4'>Resumen de tu solicitud</h3>
 
         <div className='grid grid-cols-2 gap-4'>
           <div>
             <p className='text-sm text-gray-600'>Tipo de Crédito</p>
             <p className='font-semibold'>
-              {clientType === 'personal' ? 'Personal' : 'Empresarial'} {guaranteeType === 'con-garantia' ? 'con garantía' : 'sin garantía'}
+              {creditType.slice(0, 1).toUpperCase() + creditType.slice(1)} {creditConditions ? creditConditions.replace('-', ' ') : ''}
             </p>
           </div>
           <div>
@@ -57,7 +60,7 @@ const RequestDetails = () => {
         </div>
 
         <div className='mt-8 space-y-4'>
-          <p className='text-center text-gray-600'>¿Necesitas ayuda inmediata? Contáctanos por WhatsApp</p>
+          <p className='text-center text-gray-600'>¿Necesitas atención inmediata? Contáctanos por WhatsApp</p>
           <a
             href={getWhatsappLink()}
             target='_blank'
