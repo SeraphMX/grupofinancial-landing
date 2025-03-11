@@ -147,7 +147,6 @@ const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious, otpEr
                       errorMessage={errors.industry?.message?.toString()}
                       defaultSelectedKey={field.value}
                       onSelectionChange={(key) => field.onChange(key)}
-                      allowsCustomValue={true}
                     >
                       {(item) => <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>}
                     </Autocomplete>
@@ -160,6 +159,7 @@ const ClientDataForm = ({ clientType, defaultValues, onSubmit, onPrevious, otpEr
                     variant='bordered'
                     isInvalid={!!errors.annualRevenue}
                     errorMessage={'Debes de seleccionar una opción'}
+                    disallowEmptySelection
                   >
                     <SelectItem key='menos-2m' value='menos-2m'>
                       Menos de 2 millones
