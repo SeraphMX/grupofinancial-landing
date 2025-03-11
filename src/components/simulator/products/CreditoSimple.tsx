@@ -1,27 +1,29 @@
 import { Button, cn, Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup, Slider } from '@nextui-org/react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
 import { formatCurrency } from '../../../lib/utils/currency'
-import { GuaranteeType, nextStep, prevStep, setAmount, setGuaranteeType, setTerm } from '../../../store/creditSlice'
+import { CreditConditions, nextStep, prevStep, setAmount, setCreditConditions, setTerm } from '../../../store/creditSlice'
 import { RootState } from '../../../store/store'
 import AmountSelector from '../AmountSelector'
 
 const CreditoSimple = () => {
   const dispatch = useDispatch()
-  const location = useLocation()
-  const { step, clientType, amount, term, monthlyPayment, totalPayment, clientData, guaranteeType, isOTPVerified } = useSelector(
-    (state: RootState) => state.credit
-  )
+
+  const { amount, term, monthlyPayment, creditConditions } = useSelector((state: RootState) => state.credit)
 
   const getAmountLimits = () => {
-    if (guaranteeType === 'con-garantia') {
+    if (creditConditions === 'con-garantia') {
       return { min: 500000, max: 50000000, step: 500000 }
     }
     return { min: 100000, max: 5000000, step: 50000 }
   }
 
   const { min, max, step: stepAmount } = getAmountLimits()
+
+  useEffect(() => {
+    dispatch(setCreditConditions('sin-garantia'))
+  }, [dispatch])
 
   return (
     <>
@@ -44,7 +46,7 @@ const CreditoSimple = () => {
             size='md'
             step={12}
             minValue={12}
-            maxValue={guaranteeType === 'con-garantia' ? 120 : 60}
+            maxValue={creditConditions === 'con-garantia' ? 120 : 60}
             value={term}
             onChange={(value) => dispatch(setTerm(Number(value)))}
             className='max-w-full'
@@ -88,8 +90,8 @@ const CreditoSimple = () => {
                 </Popover>
               </div>
             }
-            value={guaranteeType}
-            onValueChange={(value) => dispatch(setGuaranteeType(value as GuaranteeType))}
+            value={creditConditions}
+            onValueChange={(value) => dispatch(setCreditConditions(value as CreditConditions))}
             orientation='horizontal'
             classNames={{
               label: cn('text-primary', 'text-sm', 'font-semibold', 'font-montserrat', 'mb-2', 'text-xl')
