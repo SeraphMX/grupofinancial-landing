@@ -1,7 +1,6 @@
 import { Button, Slider } from '@nextui-org/react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
 import { formatCurrency } from '../../../lib/utils/currency'
 import { nextStep, prevStep, setAmount, setTerm } from '../../../store/creditSlice'
 import { RootState } from '../../../store/store'
@@ -9,16 +8,14 @@ import AmountSelector from '../AmountSelector'
 
 const CreditoRevolvente = () => {
   const dispatch = useDispatch()
-  const location = useLocation()
-  const { step, clientType, amount, term, monthlyPayment, totalPayment, clientData, guaranteeType, isOTPVerified } = useSelector(
-    (state: RootState) => state.credit
-  )
+
+  const { clientType, amount, term, monthlyPayment } = useSelector((state: RootState) => state.credit)
 
   const getAmountLimits = () => {
     if (clientType === 'personal') {
-      return { min: 100000, max: 10000000, step: 50000 }
+      return { min: 100000, max: 5000000, step: 50000 }
     }
-    return { min: 100000, max: 5000000, step: 50000 }
+    return { min: 100000, max: 10000000, step: 50000 }
   }
 
   const { min, max, step: stepAmount } = getAmountLimits()
