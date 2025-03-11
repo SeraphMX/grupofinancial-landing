@@ -2,18 +2,14 @@ import { Button, cn, Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup,
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
 import { formatCurrency } from '../../../lib/utils/currency'
-import { nextStep, prevStep, setAmount, setTerm } from '../../../store/creditSlice'
+import { CreditConditions, nextStep, prevStep, setAmount, setCreditConditions, setTerm } from '../../../store/creditSlice'
 import { RootState } from '../../../store/store'
 import AmountSelector from '../AmountSelector'
 
 const Arrendamiento = () => {
   const dispatch = useDispatch()
-  const location = useLocation()
-  const { step, clientType, amount, term, monthlyPayment, totalPayment, clientData, guaranteeType, isOTPVerified } = useSelector(
-    (state: RootState) => state.credit
-  )
+  const { clientType, amount, term } = useSelector((state: RootState) => state.credit)
 
   const getAmountLimits = () => {
     if (clientType === 'personal') {
@@ -26,10 +22,11 @@ const Arrendamiento = () => {
 
   const [maxLoan, setMaxLoan] = useState(amount * 0.8)
   const [monthRate, setMonthRate] = useState(amount * 0.03)
-  const [leasingType, setLeasingType] = useState('pure')
+
+  const leasingType = useSelector((state: RootState) => state.credit.creditConditions)
 
   useEffect(() => {
-    if (leasingType === 'pure') {
+    if (leasingType === 'puro') {
       setMaxLoan(amount * 0.8)
     } else {
       setMaxLoan(amount * 0.7)
@@ -42,11 +39,15 @@ const Arrendamiento = () => {
     }
   }, [amount, leasingType, clientType])
 
-  function calcularPagoMensual(monto, tasaInteresMensual, plazoMeses) {
+  function calcularPagoMensual(monto: number, tasaInteresMensual: number, plazoMeses: number) {
     // Fórmula de amortización
     const pagoMensual = (monto * tasaInteresMensual) / (1 - Math.pow(1 + tasaInteresMensual, -plazoMeses))
     return pagoMensual.toFixed(2) // Redondeamos a 2 decimales
   }
+
+  useEffect(() => {
+    dispatch(setCreditConditions('puro'))
+  }, [dispatch])
 
   return (
     <>
@@ -117,14 +118,14 @@ const Arrendamiento = () => {
               </div>
             }
             value={leasingType}
-            onValueChange={(value) => setLeasingType(value)}
+            onValueChange={(value) => dispatch(setCreditConditions(value as CreditConditions))}
             orientation='horizontal'
             classNames={{
               label: cn('text-primary', 'text-sm', 'font-semibold', 'font-montserrat', 'mb-2', 'text-xl')
             }}
           >
-            <Radio value='pure'>Arrendamiento puro</Radio>
-            <Radio value='slb'>Sale & Lease back</Radio>
+            <Radio value='puro'>Arrendamiento puro</Radio>
+            <Radio value='S&LB'>Sale & Lease back</Radio>
           </RadioGroup>
         </div>
 
