@@ -180,7 +180,7 @@ const CreditoRevolvente = () => {
   const handleWhatsAppClick = () => {
     const phoneNumber = companyInfo.whatsapp
     const message = encodeURIComponent('Hola, busco un crédito revolvente personal mayor a 10 millones.')
-    const whatsappUrl = `https://wa.me/52${phoneNumber}?text=${message}`
+    const whatsappUrl = `https://wa.me/+52${phoneNumber}?text=${message}`
 
     window.open(whatsappUrl, '_blank')
   }
