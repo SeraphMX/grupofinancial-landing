@@ -15,10 +15,10 @@ const RequestDetails = () => {
   const getWhatsappLink = () => {
     const message = encodeURIComponent(
       `¡Hola! Mi nombre es ${clientData.name}, he realizado la solicitud en línea para un crédito ${
-        creditType.slice(0, 1).toUpperCase() + creditType.slice(1)
-      } ${creditConditions ? creditConditions.replace('-', ' ') : ''} ${
         clientType === 'personal' ? 'personal' : 'empresarial'
-      } con las siguientes características:\n\n` +
+      }. ${creditType.slice(0, 1).toUpperCase() + creditType.slice(1)} ${
+        creditConditions ? creditConditions.replace('-', ' ') : ''
+      }  con las siguientes características:\n\n` +
         `Monto: ${formatCurrency(amount)}\n` +
         `Plazo: ${term} meses\n`
     )
